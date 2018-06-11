@@ -1,16 +1,19 @@
 <template>
   <div class="login">
     <div class="slogen">Labo</div>
-    <el-input placeholder="账号" v-model="phone" clearable>
+    <el-row class="phone-error ellipsis" v-show="isPhone">{{phoneText}}</el-row>
+    <el-input placeholder="账号" v-on:focus="isPhone=false;isIligle=false" v-model="phone" clearable>
       <template slot="prepend"><i class="el-icon-labo-yonghuming el-icon-right"></i></template>
     </el-input>
-    <el-input placeholder="密码" type="password" v-model="pwd" clearable>
+    <el-row class="pwd-error ellipsis" v-show="isPwd">{{pwdText}}</el-row>
+    <el-input placeholder="密码" v-on:focus="isPwd=false;isIligle=false" type="password" v-model="pwd" clearable>
       <template slot="prepend"><i class="el-icon-labo-mima el-icon-right"></i></template>
     </el-input>
     <el-input placeholder="you don't know" v-model="resToken" clearable>
       <template slot="prepend"><i class="el-icon-labo-smile el-icon-right"></i></template>
     </el-input>
     <!-- <div class="g-recaptcha" data-sitekey="6LcmD10UAAAAAODBg6yb1GUNlNMAe5LL-4FW7f5M"></div> -->
+    <el-row class="server-error ellipsis" v-show="isIligle">{{serverText}}</el-row>
     <el-checkbox v-model="hold">保持登录</el-checkbox>
     <el-button type="primary" v-bind:disabled="SUBMIT" plain v-on:click="login">登录 <i class="el-icon-labo-denglu1 el-icon-right"></i></el-button>
     <router-link to="/regist">立即注册</router-link>
@@ -37,17 +40,27 @@
         pwd: '',
         hold:false,
         resToken:'',
-        SUBMIT:false
+        SUBMIT:false,
+        isPhone:false,
+        phoneText:'',
+        isPwd:false,
+        pwdText:'',
+        isIligle:true,
+        serverText:'用户名不存在或密码错误'
       }
     },
     methods: {
       login: function () {
         if(!/^1[3456789]\d{9}$/.test(this.phone)){
-          this.$message.error('手机号格式错误')
+          this.isPhone=true;
+          this.phoneText='手机号格式错误';
+          // this.$message.error('手机号格式错误')
           return;
         }
         if(!/^[a-zA-Z](?![a-zA-Z]+$)[0-9A-Za-z]{5,19}$/.test(this.pwd)){
-          this.$message.error('密码格式错误')
+          this.isPwd=true;
+          this.pwdText='密码格式错误';
+          // this.$message.error('密码格式错误')
           return;
         }
         let stime=this.$options.methods.getStime()
@@ -72,7 +85,9 @@
           if(response.data.code==0){
             that.$router.push({ name: 'HelloWorld'})
           }else{
-            that.$message.error(response.data.des)
+            // that.$message.error(response.data.des)
+            this.isIligle=true;
+            this.serverText=response.data.des;
           }
         })
         .catch(function (error) {
@@ -117,6 +132,29 @@
     font-size: 22px;
     color:$bg_hover;
     font-weight:bold;
+  }
+  .el-row{
+    color:#f1403c;
+    position: absolute;
+    background: #fff;
+    z-index: 1;
+    height: 38px;
+    line-height: 38px;
+    padding:0 30px;
+    max-width: 200px;
+    align-self:flex-end;
+  }
+  .phone-error{
+    top:92px;;
+  }
+  .server-error{
+    top:234px;
+    align-self:center;
+    background: transparent;
+    padding:0;
+  }
+  .pwd-error{
+    top:143px;
   }
   .input-group{
     width:100%;

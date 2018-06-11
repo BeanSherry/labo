@@ -9,6 +9,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'element-ui/lib/theme-chalk/display.css';
 import './assets/icon/iconfont.css';
+import './assets/css/common.scss';
 const path = require('path')
 
 Vue.config.productionTip = false

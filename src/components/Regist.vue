@@ -10,7 +10,7 @@
       <el-input placeholder="图片验证码" class="p-code" v-model="code" clearable>
         <template slot="prepend"><i class="el-icon-labo-iconfontshouji el-icon-right"></i></template>
       </el-input>
-      <img src="http://127.0.0.1:8096/monkey/identity/kapcha" alt="" v-on:click="login">
+      <img @click="getImage" :src='kapchas'>
     </div>
     <div class="code-box">
       <el-input placeholder="短信验证码" class="p-code" type="password" v-model="pwd" clearable>
@@ -19,6 +19,7 @@
       <el-button class="get-code" plain v-on:click="getMessage">{{codeText}}</el-button>
     </div>
     <el-button type="primary">注册 <i class="el-icon-labo-zhuce-copy el-icon-right"></i></el-button>
+    <router-link to="/login">立即登录</router-link>
   </div>
 </template>
 <script>
@@ -35,7 +36,8 @@
         getCode:false,
         code:'',
         codeText:'获取短信验证码',
-        imgId:'1'
+        imgId:'1',
+        kapchas:'/agentboot/kapcha',
       }
     },
     methods: {
@@ -98,6 +100,9 @@
           .catch(function (error) {
             console.log(error);
           });
+        },
+        getImage:function(){
+          this.kapchas = '/agentboot/kapcha?'+ Math.random();
         }
       }
   }
