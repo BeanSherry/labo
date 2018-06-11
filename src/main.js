@@ -27,13 +27,4 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
-// axios.get('/api/monkey/general/sniff/status/', {
-//   params: {
-//     }
-//   })
-//   .then(function (response) {
-//     console.log(response);
-//   })
-//   .catch(function (error) {
-//     console.log(error);
-// });
+
