@@ -37,7 +37,8 @@
         code:'',
         codeText:'获取短信验证码',
         imgId:'1',
-        kapchas:'/agentboot/kapcha',
+        // kapchas:'/identity/kapcha',
+        kapchas:'/api/identity/kapcha',
       }
     },
     methods: {
@@ -102,7 +103,7 @@
           });
         },
         getImage:function(){
-          this.kapchas = '/agentboot/kapcha?'+ Math.random();
+          this.kapchas = '/api/identity/kapcha?'+ Math.random();
         }
       }
   }

@@ -25,13 +25,13 @@
   import md5 from 'js-md5';
   import qs from 'qs';
   var TIMEINTERVAL=0;
-  // axios.get('/api/general/sys/time/get')
-  //   .then(function (response) {
-  //     TIMEINTERVAL=response.data.data-new Date().getTime()
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  // });
+  axios.get('/api/general/sys/time/get')
+    .then(function (response) {
+      TIMEINTERVAL=response.data.data-new Date().getTime()
+    })
+    .catch(function (error) {
+      console.log(error);
+  });
   export default {
     name: 'Login',
     data () {
@@ -45,7 +45,7 @@
         phoneText:'',
         isPwd:false,
         pwdText:'',
-        isIligle:true,
+        isIligle:false,
         serverText:'用户名不存在或密码错误'
       }
     },
@@ -81,17 +81,17 @@
           }
         })
         .then(function (response) {
-          this.SUBMIT=true
+          that.SUBMIT=false
           if(response.data.code==0){
             that.$router.push({ name: 'HelloWorld'})
           }else{
             // that.$message.error(response.data.des)
-            this.isIligle=true;
-            this.serverText=response.data.des;
+            that.isIligle=true;
+            that.serverText=response.data.des;
           }
         })
         .catch(function (error) {
-          this.SUBMIT=true
+          that.SUBMIT=false
           console.log(error)
         });
       },
@@ -177,5 +177,12 @@
   .g-recaptcha > div,
   iframe{
     width: 100% !important;
+  }
+</style>
+<style>
+  #app{
+    margin:0;
+    background-image: url('../assets/image/bg.jpg');
+    background-size: cover;
   }
 </style>
