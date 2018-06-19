@@ -60,7 +60,6 @@
         if(!/^[a-zA-Z](?![a-zA-Z]+$)[0-9A-Za-z]{5,19}$/.test(this.pwd)){
           this.isPwd=true;
           this.pwdText='密码格式错误';
-          // this.$message.error('密码格式错误')
           return;
         }
         let stime=this.$options.methods.getStime()
@@ -107,7 +106,6 @@
     }
   }
 </script>
-
 <style scoped lang="scss">
   $bg_hover:rgb(102,186,183);
   .login{
