@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import Regist from '@/components/Regist'
+import Reset from '@/components/Reset'
 
 Vue.use(Router)
 
@@ -17,6 +18,11 @@ export default new Router({
       path:'/regist',
       name:'Regist',
       component:Regist
+    },
+    {
+      path:'/reset',
+      name:'Reset',
+      component:Reset
     },
     {
       path: '/',

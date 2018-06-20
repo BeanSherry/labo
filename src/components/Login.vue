@@ -9,6 +9,7 @@
     <el-input placeholder="密码" v-on:focus="isPwd=false;isIligle=false" type="password" v-model="pwd" clearable>
       <template slot="prepend"><i class="el-icon-labo-mima el-icon-right"></i></template>
     </el-input>
+    <router-link class="forget-pwd" to="/reset">忘记密码</router-link>
     <el-input placeholder="you don't know" v-model="resToken" clearable>
       <template slot="prepend"><i class="el-icon-labo-smile el-icon-right"></i></template>
     </el-input>
@@ -150,6 +151,9 @@
     align-self:center;
     background: transparent;
     padding:0;
+  }
+  .forget-pwd{
+    align-self:flex-end;
   }
   .pwd-error{
     top:143px;
