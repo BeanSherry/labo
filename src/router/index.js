@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import Regist from '@/components/Regist'
 import Reset from '@/components/Reset'
+import Upload from '@/components/Upload'
 
 Vue.use(Router)
 
@@ -29,7 +30,11 @@ export default new Router({
       name: 'HelloWorld',
       component: HelloWorld
     },
-
+    {
+      path: '/upload',
+      name: 'Upload',
+      component: Upload
+    },
   ]
 })
 

@@ -23,16 +23,8 @@
 <script>
   import axios from 'axios'
   import $ from 'jquery'
-  import md5 from 'js-md5';
   import qs from 'qs';
-  var TIMEINTERVAL=0;
-  axios.get('/api/general/sys/time/get')
-    .then(function (response) {
-      TIMEINTERVAL=response.data.data-new Date().getTime()
-    })
-    .catch(function (error) {
-      console.log(error);
-  });
+  import md5 from 'js-md5';
   export default {
     name: 'Login',
     data () {
@@ -47,8 +39,19 @@
         isPwd:false,
         pwdText:'',
         isIligle:false,
+        TIMEINTERVAL:0,
         serverText:'用户名不存在或密码错误'
       }
+    },
+    created:function(argument) {
+      let that=this;
+      axios.get('/api/general/sys/time/get')
+        .then(function (response) {
+          that.TIMEINTERVAL=response.data.data-new Date().getTime()
+        })
+        .catch(function (error) {
+          that.$message.error(error.message)
+      });
     },
     methods: {
       login: function () {
@@ -63,8 +66,8 @@
           this.pwdText='密码格式错误';
           return;
         }
-        let stime=this.$options.methods.getStime()
-        let pwd=this.$options.methods.md5NHex(this.pwd,stime.substr(stime.length-1,1))
+        let stime=this.$common.getStime(this.TIMEINTERVAL)
+        let pwd=this.$common.md5NHex(this.pwd,stime.substr(stime.length-1,1))
         let that=this;
         let sign=md5(this.phone+pwd+this.resToken+this.hold+stime)
         this.SUBMIT=true;
@@ -92,18 +95,9 @@
         })
         .catch(function (error) {
           that.SUBMIT=false
-          console.log(error)
+          that.$message.error(error.message)
         });
       },
-      md5NHex:function(pwd,n){
-        for(let i=0;i<=n;i++){
-          pwd=md5(pwd)
-        }
-        return pwd
-      },
-      getStime:function(){
-        return (new Date().getTime()+TIMEINTERVAL).toString()
-      }
     }
   }
 </script>
@@ -144,7 +138,7 @@
     align-self:flex-end;
   }
   .phone-error{
-    top:92px;;
+    top:88px;;
   }
   .server-error{
     top:234px;
@@ -156,7 +150,7 @@
     align-self:flex-end;
   }
   .pwd-error{
-    top:143px;
+    top:134px;
   }
   .input-group{
     width:100%;

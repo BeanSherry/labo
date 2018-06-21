@@ -142,7 +142,7 @@
         })
         .catch(function (error) {
           that.GETMESS=false;
-          that.$message.error('error')
+          that.$message.error(error.message);
           return;
         });
       },

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <!-- <img src="./assets/image/bean.png"> -->
+    <div class="labo-top"></div>
     <router-view/>
   </div>
 </template>

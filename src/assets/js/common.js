@@ -1,3 +1,4 @@
+import md5 from 'js-md5';
 export default{
   md5NHex:function(pwd,n){
     for(let i=0;i<=n;i++){
@@ -5,7 +6,7 @@ export default{
     }
     return pwd
   },
-  test_log:function() {
-    console.log(123)
-  }
+  getStime:function(TIMEINTERVAL){
+    return (new Date().getTime()+TIMEINTERVAL).toString()
+  },
 }

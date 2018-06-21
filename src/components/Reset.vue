@@ -28,7 +28,6 @@
 <script>
   import axios from 'axios'
   import $ from 'jquery'
-  import md5 from 'js-md5';
   import qs from 'qs';
   export default {
     name: 'Reset',
@@ -56,13 +55,7 @@
       }
     },
     methods: {
-      test:function(){
-        this.$common.test_log()
-      },
       reset: function () {
-        this.$options.methods.test();
-        // let pwd1=this.$options.methods.md5NHex(this.pwd,0)
-        return;
         if(!/^1[3456789]\d{9}$/.test(this.phone)){
           this.isPhone=true;
           this.phoneText='手机号格式错误';
@@ -81,7 +74,7 @@
           this.$message.error('请输入短信验证码')
           return;
         }
-        let pwd=this.$options.methods.md5NHex(this.pwd,0)
+        let pwd=this.$common.md5NHex(this.pwd,0)
         let that=this;
         this.SUBMIT=true;
         axios.post('/api/identity/password/reset', qs.stringify({
@@ -106,12 +99,6 @@
           that.$message.error(error.message)
         });
       },
-      // md5NHex:function(pwd,n){
-      //   for(let i=0;i<=n;i++){
-      //     pwd=md5(pwd)
-      //   }
-      //   return pwd
-      // },
       getMessage:function(){
         let that=this;
         let num=59;

@@ -4,22 +4,6 @@
     <!-- 踢球的小孩 -->
     <div id="idhyt-surprise-ball">
       <div id="idhyt-surprise-ball-animation">
-        <!-- <span id="layer0Go" class="drag">M</span>
-        <span id="layer1Go" class="drag">B</span>
-        <span id="layer2Go" class="drag">E</span>
-        <span id="layer3Go" class="drag">A</span>
-        <span id="layer4Go" class="drag">N</span>
-        <span id="layer5Go" class="drag">A</span>
-        <span id="layer6Go" class="drag">N</span>
-        <span id="layer7Go" class="drag">D</span>
-        <span id="layer8Go" class="drag">M</span>
-        <span id="layer9Go" class="drag">S</span>
-        <span id="layer10Go" class="drag">H</span>
-        <span id="layer11Go" class="drag">E</span>
-        <span id="layer12Go" class="drag">R</span>
-        <span id="layer13Go" class="drag">R</span>
-        <span id="layer14Go" class="drag">Y</span>
-        <span id="layer15Go" class="drag ball"></span> -->
         <span id="layer0Go" class="drag">w</span>
     <span id="layer1Go" class="drag">h</span>
     <span id="layer2Go" class="drag">y</span>
