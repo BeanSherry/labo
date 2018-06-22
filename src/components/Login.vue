@@ -103,6 +103,10 @@
 </script>
 <style scoped lang="scss">
   $bg_hover:rgb(102,186,183);
+  .el-header{
+    display:none;
+    background:red;
+  }
   .login{
     display:flex;
     flex-direction:column;
@@ -173,12 +177,5 @@
   .g-recaptcha > div,
   iframe{
     width: 100% !important;
-  }
-</style>
-<style>
-  #app{
-    margin:0;
-    background-image: url('../assets/image/bg.jpg');
-    background-size: cover;
   }
 </style>

@@ -1,14 +1,24 @@
 <template>
-  <div id="app">
-    <!-- <img src="./assets/image/bean.png"> -->
-    <div class="labo-top"></div>
-    <router-view/>
+  <div id="app"> 
+    <el-container>
+      <el-header height="40px" class="{disnone:hideHeader}">Header</el-header>
+      <!-- <el-aside >Aside</el-aside> -->
+      <el-main >
+        <router-view/>
+      </el-main>
+      <el-footer height="40px">@BeanSherry</el-footer>
+    </el-container> 
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data(){
+    return {
+      hideHeader:false
+    }
+  }
 }
 </script>
 
@@ -19,6 +29,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top:40px;
 }
 </style>

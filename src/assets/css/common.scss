@@ -37,8 +37,32 @@ body{
   height:60px;
   background-color:#ebebeb;
 }
-
-
+.el-header{
+  line-height:40px;
+  background:#000;
+  color: #fff;
+  position: fixed;
+  border:none;
+  top:0;
+  left:0;
+  z-index: 2;
+  width:100%;
+}
+.el-footer{
+  line-height:40px;
+  background:transparent;
+  color: #ccc;
+  position: fixed;
+  border:none;
+  bottom:0;
+  left:0;
+  z-index: 2;
+  width:100%;
+  letter-spacing: 1px;
+}
+.disnone{
+  display:none !important;
+}
 
 
 

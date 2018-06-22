@@ -10,6 +10,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import 'element-ui/lib/theme-chalk/display.css';
 import './assets/icon/iconfont.css';
 import './assets/css/common.scss';
+import './assets/js/config.js';
 import common from'./assets/js/common.js';
 const path = require('path')
 Vue.prototype.$common = common;
