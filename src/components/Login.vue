@@ -1,4 +1,4 @@
-<template>
+<template ref="login" hideHeader='true'>
   <div class="login">
     <div class="slogen">Labo</div>
     <el-row class="phone-error ellipsis" v-show="isPhone">{{phoneText}}</el-row>
@@ -27,8 +27,10 @@
   import md5 from 'js-md5';
   export default {
     name: 'Login',
+    // props:['hideHeader'],
     data () {
       return {
+        hideHeader:false,
         phone: '',
         pwd: '',
         hold:false,
@@ -40,11 +42,13 @@
         pwdText:'',
         isIligle:false,
         TIMEINTERVAL:0,
+        hideHeaderL:this.hideHeader,
         serverText:'用户名不存在或密码错误'
       }
     },
     created:function(argument) {
       let that=this;
+      this.$emit('hideHeader',true);
       axios.get('/api/general/sys/time/get')
         .then(function (response) {
           that.TIMEINTERVAL=response.data.data-new Date().getTime()
@@ -58,7 +62,6 @@
         if(!/^1[3456789]\d{9}$/.test(this.phone)){
           this.isPhone=true;
           this.phoneText='手机号格式错误';
-          // this.$message.error('手机号格式错误')
           return;
         }
         if(!/^[a-zA-Z](?![a-zA-Z]+$)[0-9A-Za-z]{5,19}$/.test(this.pwd)){
@@ -71,24 +74,19 @@
         let that=this;
         let sign=md5(this.phone+pwd+this.resToken+this.hold+stime)
         this.SUBMIT=true;
-        axios.post('/api/identity/user/login', qs.stringify({
-            user:this.phone,
-            pwd:pwd,
-            response :this.resToken,
-            stay:this.hold,
-            stime:stime,
-            sign:sign
-          }),{
-          headers:{
-            'Content-Type':'application/x-www-form-urlencoded'
-          }
+        this.$axios.post('/api/identity/user/login', {
+          user:this.phone,
+          pwd:pwd,
+          response :this.resToken,
+          stay:this.hold,
+          stime:stime,
+          sign:sign
         })
         .then(function (response) {
           that.SUBMIT=false
           if(response.data.code==0){
             that.$router.push({ name: 'HelloWorld'})
           }else{
-            // that.$message.error(response.data.des)
             that.isIligle=true;
             that.serverText=response.data.des;
           }

@@ -16,7 +16,6 @@
   </div>
 </template>
 <script>
-  import axios from 'axios'
   export default{
     name: 'Upload',
     data() {
@@ -46,6 +45,7 @@
   }
 </script>
 <style>
+
 </style>
 <style scoped lang='scss'>
   .avatar-uploader .el-upload {

@@ -26,7 +26,6 @@
   </div>
 </template>
 <script>
-  import axios from 'axios'
   import $ from 'jquery'
   import qs from 'qs';
   export default {
@@ -77,7 +76,7 @@
         let pwd=this.$common.md5NHex(this.pwd,0)
         let that=this;
         this.SUBMIT=true;
-        axios.post('/api/identity/password/reset', qs.stringify({
+        this.$axios.post('/api/identity/password/reset', qs.stringify({
             phone:this.phone,
             code:this.messageCode,
             pwd:pwd
@@ -107,7 +106,7 @@
           return;
         }
         this.GETMESS=true;
-        axios.get('/api/identity/message/apply', {
+        this.$axios.get('/api/identity/message/apply', {
           params: {
             phone: this.phone,
             code:this.code

@@ -30,7 +30,6 @@
   </div>
 </template>
 <script>
-  import axios from 'axios'
   import $ from 'jquery'
   import md5 from 'js-md5';
   import qs from 'qs';
@@ -84,7 +83,7 @@
         let pwd=this.$options.methods.md5NHex(this.pwd,0)
         let that=this;
         this.SUBMIT=true;
-        axios.post('/api/identity/user/register', qs.stringify({
+        this.$axios.post('/api/identity/user/register', qs.stringify({
             phone:this.phone,
             code:this.messageCode,
             name:this.uname,
@@ -121,7 +120,7 @@
           return;
         }
         this.GETMESS=true;
-        axios.get('/api/identity/message/apply', {
+        this.$axios.get('/api/identity/message/apply', {
           params: {
             phone: this.phone,
             code:this.code

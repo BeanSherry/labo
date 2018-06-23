@@ -2,8 +2,14 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import HelloWorld from '@/components/HelloWorld'
+import Login from '@/components/Login'
+import Regist from '@/components/Regist'
+import Reset from '@/components/Reset'
+import Upload from '@/components/Upload'
 import router from './router'
 import axios from 'axios'
+import qs from 'qs'
 import $ from 'jquery'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -14,7 +20,12 @@ import './assets/js/config.js';
 import common from'./assets/js/common.js';
 const path = require('path')
 Vue.prototype.$common = common;
-
+Vue.prototype.$axios = axios.create();
+Vue.prototype.$axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+Vue.prototype.$axios.defaults.headers.post['Access-Control-Allow-Credentials'] = true;
+Vue.prototype.$axios.defaults.transformRequest = [function(data) {
+  return qs.stringify(data);
+}];
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 
@@ -29,7 +40,10 @@ Vue.use(ElementUI);
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: { 
+    App,
+    Login,
+  },
   template: '<App/>'
 })
 
