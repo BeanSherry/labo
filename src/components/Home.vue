@@ -5,26 +5,24 @@
     <div id="idhyt-surprise-ball">
       <div id="idhyt-surprise-ball-animation">
         <span id="layer0Go" class="drag">w</span>
-    <span id="layer1Go" class="drag">h</span>
-    <span id="layer2Go" class="drag">y</span>
-    <span id="layer3Go" class="drag">?</span>
-    <span id="layer4Go" class="drag">y</span>
-    <span id="layer5Go" class="drag">o</span>
-    <span id="layer6Go" class="drag">u</span>
-    <span id="layer7Go" class="drag">a</span>
-    <span id="layer8Go" class="drag">r</span>
-    <span id="layer9Go" class="drag">e</span>
-    <span id="layer10Go" class="drag">h</span>
-    <span id="layer11Go" class="drag">e</span>
-    <span id="layer12Go" class="drag">r</span>
-    <span id="layer13Go" class="drag">e</span>
-    <span id="layer14Go" class="drag">?</span>
-    <span id="layer15Go" class="drag ball"></span>
+        <span id="layer1Go" class="drag">h</span>
+        <span id="layer2Go" class="drag">y</span>
+        <span id="layer3Go" class="drag">?</span>
+        <span id="layer4Go" class="drag">y</span>
+        <span id="layer5Go" class="drag">o</span>
+        <span id="layer6Go" class="drag">u</span>
+        <span id="layer7Go" class="drag">a</span>
+        <span id="layer8Go" class="drag">r</span>
+        <span id="layer9Go" class="drag">e</span>
+        <span id="layer10Go" class="drag">h</span>
+        <span id="layer11Go" class="drag">e</span>
+        <span id="layer12Go" class="drag">r</span>
+        <span id="layer13Go" class="drag">e</span>
+        <span id="layer14Go" class="drag">?</span>
+        <span id="layer15Go" class="drag ball"></span>
       </div>
     </div>
     <!-- 踢球的小孩 -->
-    <!-- <router-link to="/login">Go to Login</router-link> -->
-    <!-- <router-link to="/regist">Go to Regist</router-link> -->
     <li class="taiji"></li>
   </div>
 
@@ -32,11 +30,13 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Home',
   data () {
     return {
       msg: 'BeanSherry'
     }
+  },
+  created:function(argument) {
   }
 }
 </script>

@@ -18,6 +18,7 @@
 <script>
   export default{
     name: 'Upload',
+    // 'upload':'Upload',
     data() {
       return {
         imageUrl: '',

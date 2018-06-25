@@ -2,11 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import HelloWorld from '@/components/HelloWorld'
-import Login from '@/components/Login'
-import Regist from '@/components/Regist'
-import Reset from '@/components/Reset'
-import Upload from '@/components/Upload'
+import VueRouter from 'vue-router'
 import router from './router'
 import axios from 'axios'
 import qs from 'qs'
@@ -28,6 +24,7 @@ Vue.prototype.$axios.defaults.transformRequest = [function(data) {
 }];
 Vue.config.productionTip = false
 Vue.use(ElementUI);
+Vue.use(VueRouter);
 
 // Vue.component(Button.name, Button);
 // Vue.component(Select.name, Select);
@@ -42,8 +39,7 @@ new Vue({
   router,
   components: { 
     App,
-    Login,
   },
   template: '<App/>'
-})
+}).$mount('#app')
 

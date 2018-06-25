@@ -21,9 +21,7 @@
   </div>
 </template>
 <script>
-  import axios from 'axios'
   import $ from 'jquery'
-  import qs from 'qs';
   import md5 from 'js-md5';
   export default {
     name: 'Login',
@@ -49,7 +47,7 @@
     created:function(argument) {
       let that=this;
       this.$emit('hideHeader',true);
-      axios.get('/api/general/sys/time/get')
+      this.$axios.get('/api/general/sys/time/get')
         .then(function (response) {
           that.TIMEINTERVAL=response.data.data-new Date().getTime()
         })
@@ -85,7 +83,7 @@
         .then(function (response) {
           that.SUBMIT=false
           if(response.data.code==0){
-            that.$router.push({ name: 'HelloWorld'})
+            that.$router.push({ name: 'Home'})
           }else{
             that.isIligle=true;
             that.serverText=response.data.des;
@@ -100,6 +98,9 @@
   }
 </script>
 <style scoped lang="scss">
+  a{
+    color: #42b983;
+  }
   $bg_hover:rgb(102,186,183);
   .el-header{
     display:none;

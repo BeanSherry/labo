@@ -153,6 +153,9 @@
 </script>
 <style scoped lang="scss">
   $bg_hover:rgb(102,186,183);
+  a{
+    color: #42b983;
+  }
   .regist{
     display:flex;
     flex-direction:column;
