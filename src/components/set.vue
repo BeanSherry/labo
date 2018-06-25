@@ -1,14 +1,14 @@
 <template>
   <el-container>
     <el-aside width="200px">
-      <el-menu 
-      default-active="1-4-1" 
-      class="el-menu-vertical-demo" 
-      @open="handleOpen" 
+      <el-menu
+      default-active="1-4-1"
+      class="el-menu-vertical-demo"
+      @open="handleOpen"
       @close="handleClose"
       @select="select"
       :default-active="activeIndex"
-      :collapse="isCollapse" 
+      :collapse="isCollapse"
       background-color="#fff">
         <el-menu-item index="1">
           <i class="el-icon-labo-yonghuming"></i>
@@ -58,11 +58,11 @@
     components:{
       pwdEdit,
     },
-    data(){ 
+    data(){
       return {
         isCollapse: false,
         activeIndex:"1"
-      }; 
+      };
     },
     methods:{
       handleOpen(key, keyPath) {
@@ -83,7 +83,7 @@
             this.$router.push({ name: 'set'});
             break;
           case '4':
-            this.$router.push({ name: 'set/pwdEdit'});
+            this.$router.push({ name: 'pwdEdit'});
             break;
           default:
             break;

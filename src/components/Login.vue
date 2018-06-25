@@ -25,7 +25,6 @@
   import md5 from 'js-md5';
   export default {
     name: 'Login',
-    // props:['hideHeader'],
     data () {
       return {
         hideHeader:false,
@@ -39,21 +38,9 @@
         isPwd:false,
         pwdText:'',
         isIligle:false,
-        TIMEINTERVAL:0,
         hideHeaderL:this.hideHeader,
         serverText:'用户名不存在或密码错误'
       }
-    },
-    created:function(argument) {
-      let that=this;
-      this.$emit('hideHeader',true);
-      this.$axios.get('/api/general/sys/time/get')
-        .then(function (response) {
-          that.TIMEINTERVAL=response.data.data-new Date().getTime()
-        })
-        .catch(function (error) {
-          that.$message.error(error.message)
-      });
     },
     methods: {
       login: function () {
@@ -67,7 +54,7 @@
           this.pwdText='密码格式错误';
           return;
         }
-        let stime=this.$common.getStime(this.TIMEINTERVAL)
+        let stime=this.$common.getStime()
         let pwd=this.$common.md5NHex(this.pwd,stime.substr(stime.length-1,1))
         let that=this;
         let sign=md5(this.phone+pwd+this.resToken+this.hold+stime)

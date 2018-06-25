@@ -44,9 +44,9 @@ export default new Router({
       component: set,
       children:[
         {
-          path: 'pwdEdit',
+          path: '/set/pwdEdit',
           name: 'pwdEdit',
-          component:pwdEdit
+          component:pwdEdit,
         },
       ]
     },
