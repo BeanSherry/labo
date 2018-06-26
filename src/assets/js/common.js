@@ -3,6 +3,7 @@ var TIMEINTERVAL=0;
 export default{
 	TIMEINTERVAL,
   md5NHex:function(pwd,n){
+    var n=n||0;
     for(let i=0;i<=n;i++){
       pwd=md5(pwd)
     }

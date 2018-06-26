@@ -6,8 +6,10 @@ import Regist from '@/components/Regist'
 import Reset from '@/components/Reset'
 import Upload from '@/components/Upload'
 import tab from '@/components/tab'
+import breadcrumb from '@/components/breadcrumb'
 import set from '@/components/Set'
 import pwdEdit from '@/components/pwdEdit'
+import mailBind from '@/components/mailBind'
 
 Vue.use(Router)
 
@@ -47,6 +49,11 @@ export default new Router({
           path: '/set/pwdEdit',
           name: 'pwdEdit',
           component:pwdEdit,
+        },
+        {
+          path: '/set/mailBind',
+          name: 'mailBind',
+          component:mailBind,
         },
       ]
     },

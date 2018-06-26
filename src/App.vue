@@ -5,7 +5,6 @@
       <el-main class="nopadding">
         <router-view/>
       </el-main>
-      <!-- <el-footer height="40px">@BeanSherry</el-footer> -->
     </el-container> 
   </div>
 </template>

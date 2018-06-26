@@ -11,7 +11,7 @@
       :collapse="isCollapse"
       background-color="#fff">
         <el-menu-item index="1">
-          <i class="el-icon-labo-yonghuming"></i>
+          <i class="el-icon-labo-shezhi"></i>
           <span slot="title">User Settings</span>
         </el-menu-item>
         <el-menu-item index="2">
@@ -19,7 +19,7 @@
           <span slot="title">Profile</span>
         </el-menu-item>
         <el-menu-item index="3">
-          <i class="el-icon-menu"></i>
+          <i class="el-icon-message"></i>
           <span slot="title">Emails</span>
         </el-menu-item>
         <el-menu-item index="4">
@@ -35,28 +35,12 @@
 </template>
 <script>
   import pwdEdit from '@/components/pwdEdit'
-  import VueRouter from 'vue-router'
-  import set from '@/components/Set'
-  const router = new VueRouter({
-    routes: [
-      {
-        path: '/set',
-        name: 'set',
-        component: set,
-        children:[
-          {
-            path: 'pwdEdit',
-            name: 'pwdEdit',
-            component:pwdEdit
-          },
-        ]
-      },
-    ]
-  })
+  import mailBind from '@/components/mailBind'
   export default{
     name:'set',
     components:{
       pwdEdit,
+      mailBind,
     },
     data(){
       return {
@@ -80,7 +64,7 @@
             this.$router.push({ name: 'set'});
             break;
           case '3':
-            this.$router.push({ name: 'set'});
+            this.$router.push({ name: 'mailBind'});
             break;
           case '4':
             this.$router.push({ name: 'pwdEdit'});
