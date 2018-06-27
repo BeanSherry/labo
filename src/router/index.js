@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
+import album from '@/components/album'
 import Login from '@/components/Login'
 import Regist from '@/components/Regist'
 import Reset from '@/components/Reset'
@@ -10,6 +11,7 @@ import breadcrumb from '@/components/breadcrumb'
 import set from '@/components/Set'
 import pwdEdit from '@/components/pwdEdit'
 import mailBind from '@/components/mailBind'
+import mini from '@/components/mini'
 
 Vue.use(Router)
 
@@ -34,6 +36,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path:'/album',
+      name:'album',
+      component:album
     },
     {
       path: '/upload',

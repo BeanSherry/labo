@@ -8,8 +8,8 @@
             <li v-bind:class="{active:active=='/'}">
               <router-link to="/">首页</router-link>
             </li>
-            <li v-bind:class="{active:active=='/upload'}">
-              <router-link to="/upload">相册</router-link>
+            <li v-bind:class="{active:active=='/album'}">
+              <router-link to="/album">相册</router-link>
             </li>
           </ul>
         </div>
