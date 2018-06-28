@@ -2,7 +2,7 @@
   <div class="login">
     <div class="slogen">Labo</div>
     <el-row class="phone-error ellipsis" v-show="isPhone">{{phoneText}}</el-row>
-    <el-input placeholder="账号" v-on:focus="isPhone=false;isIligle=false" v-model="phone" clearable>
+    <el-input placeholder="手机号或邮箱" v-on:focus="isPhone=false;isIligle=false" v-model="phone" clearable>
       <template slot="prepend"><i class="el-icon-labo-yonghuming el-icon-right"></i></template>
     </el-input>
     <el-row class="pwd-error ellipsis" v-show="isPwd">{{pwdText}}</el-row>
@@ -44,9 +44,9 @@
     },
     methods: {
       login: function () {
-        if(!/^1[3456789]\d{9}$/.test(this.phone)){
+        if(!/^1[3456789]\d{9}$/.test(this.phone) && !/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z]{2,5}$$/.test(this.phone)){
           this.isPhone=true;
-          this.phoneText='手机号格式错误';
+          this.phoneText='账号格式错误';
           return;
         }
         if(!/^[a-zA-Z](?![a-zA-Z]+$)[0-9A-Za-z]{5,19}$/.test(this.pwd)){
@@ -128,7 +128,7 @@
     align-self:flex-end;
   }
   .phone-error{
-    top:88px;;
+    top:87px;;
   }
   .server-error{
     top:234px;
@@ -140,7 +140,7 @@
     align-self:flex-end;
   }
   .pwd-error{
-    top:134px;
+    top:133px;
   }
   .input-group{
     width:100%;
