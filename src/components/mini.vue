@@ -15,11 +15,8 @@
       </defs>
     </svg>
     <div class="mini">
-      <label class="mini-menu">菜单</label>
-      <a href="" class="menu-item menu-first">首页</a>
-      <a href="" class="menu-item menu-second">首页</a>
-      <a href="" class="menu-item menu-third">首页</a>
-      <a href="" class="menu-item menu-fourth">首页</a>
+      <label class="mini-menu">{{menuName}}</label>
+      <span v-for="(item,key) in menu" class="menu-item menu1" @click="select(key,$event)">{{item.value}}</span>
     </div>
   </div>
   
@@ -28,14 +25,20 @@
   export default{
     name:'mini',
     props:{
-      crumb:Array,
+      menu:Array,
+      status:String,
+      menuName:String,
     },
     data(){ 
       return {
+        selectType:0,
       }; 
     },
     methods:{
-
+      select(index,event){
+        this.selectType = index
+        this.$emit('select', index)
+      }
     }
   }
 </script>
@@ -82,42 +85,7 @@
       transform:skewX(-.1953125deg) skewY(-.1953125deg)
     }
   }
-  @keyframes bounceInUp {
-    from, 60%, 75%, 90%, to {
-      -webkit-animation-timing-function:cubic-bezier(0.215, .61, .355, 1);
-      -moz-animation-timing-function:cubic-bezier(0.215, .61, .355, 1);
-      animation-timing-function:cubic-bezier(0.215, .61, .355, 1)
-    }
-    from {
-      opacity: 0;
-      -webkit-transform: translate3d(0, 800px, 0);
-      -moz-transform: translate3d(0, 800px, 0);
-      transform: translate3d(0, 800px, 0)
-    }
-    60% {
-      opacity:1;
-      -webkit-transform:translate3d(0, -20px, 0);
-      -moz-transform:translate3d(0, -20px, 0);
-      transform:translate3d(0, -20px, 0)
-    }
-    75% {
-      -webkit-transform:translate3d(0, 10px, 0);
-      -moz-transform:translate3d(0, 10px, 0);
-      transform:translate3d(0, 10px, 0)
-    }
-    90% {
-      -webkit-transform:translate3d(0, -5px, 0);
-      -moz-transform:translate3d(0, -5px, 0);
-      transform:translate3d(0, -5px, 0)
-    }
-    to {
-      -webkit-transform: translate3d(0, 0, 0);
-      -moz-transform: translate3d(0, 0, 0);
-      transform: translate3d(0, 0, 0)
-    }
-  }
   .mini{
-    animation-name: bounceInUp;
     animation-delay: 1s;
     animation-duration: 1s;
     animation-fill-mode: both;
@@ -131,6 +99,7 @@
     opacity: .75;
     color:#fff;
     font-size: 16px;
+    z-index: 1;
   }
   .mini:hover{
     opacity: 1;
@@ -153,6 +122,8 @@
     font-size: 20px;
     z-index: 1;
     cursor: pointer;
+  }
+  .mini:hover .mini-menu{
     animation: jello 1s;
   }
   .menu-item{
@@ -173,6 +144,7 @@
     transition: transform .6s, background .5s;
     font-size: 14px;
     box-sizing: border-box;
+    cursor:pointer;
   }
   .menu-item:hover{
     background:#A9C734;
@@ -181,16 +153,16 @@
     line-height: 20px;
     padding-top:10px;
   }
-  .mini:hover .menu-first{
+  .mini:hover .menu-item:nth-of-type(1){
     transform: translate3d(0, -135%, 0);
   }
-  .mini:hover .menu-second{
+  .mini:hover .menu-item:nth-of-type(2){
     transform: translate3d(-120%, -70%, 0);
   }
-  .mini:hover .menu-third{
+  .mini:hover .menu-item:nth-of-type(3){
     transform: translate3d(-120%, 70%, 0);
   }
-  .mini:hover .menu-fourth{
+  .mini:hover .menu-item:nth-of-type(4){
     transform: translate3d(0, 135%, 0);
   }
 </style>
