@@ -65,7 +65,6 @@
           response :this.resToken,
           stay:this.hold,
           stime:stime,
-          sign:sign
         })
         .then(function (response) {
           that.SUBMIT=false

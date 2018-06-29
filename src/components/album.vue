@@ -2,9 +2,10 @@
 <div class="album">
   <mini :menu='menu' :status='status' :menuName="menuName" @select="onSelect"></mini>
   <div class="imgs">
-    <div class="img-box" v-bind:class="{ del: selectType==1&&isdel }" v-for="item in imgs">
-      <i class="el-icon-circle-close" v-show="selectType==1&&isdel"></i>
+    <div class="img-box" v-bind:class="{ del: selectType==1&&isdel }" v-for="(item,key) in imgs">
+      <i class="el-icon-circle-close" :data-id="key" v-show="selectType==1&&isdel" :index="key" @click="del_img(key)"></i>
       <img :src="item">
+      <!-- <canvas></canvas> -->
     </div>
   </div>
   <input type="file" accept="image/png,image/jpg,image/gif" style="display:none;">
@@ -24,11 +25,15 @@
     components:{
       mini,
     },
+    watch:{ 
+      'imgs':'make_layout_change' 
+    },
     data(){
       return {
         menuName:'菜单',
         isdel:false,
         selectType:0,
+        delImg:[],
         menu:[
           {'value':'上传'},
           {'value':'删除'},
@@ -63,6 +68,39 @@
       });
     },
     methods:{
+      del_img(index){
+        console.log(index);
+        // let node=$(event.target).parent().find('canvas');
+        // this.light(node)
+      },
+      light(node){
+        var canv = node[0];
+        var ctx = canv.getContext("2d");
+        var canvWidth = canv.width;
+        var canvHeight = canv.height;
+        var r = 0;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        r = Math.floor(Math.random() * 5) * canvWidth / 50;
+        if (r <= 30) {
+            x += r;
+        } else {
+            x -= r;
+        }
+        y += Math.floor(Math.random() * 5) * canvHeight / 70;
+        ctx.lineTo(x, y);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "rgba(255, 255, 0, 1)"
+        ctx.stroke();
+        ctx.closePath();
+        if (y > canvHeight) {
+            ctx.clearRect(0, 0, canvWidth, canvHeight);
+            x = canvWidth / 2;
+            y = 0;
+        }
+        requestAnimationFrame(light);
+
+      },
       onSelect(index){
         this.selectType=index;
         let that=this;
@@ -120,6 +158,14 @@
       },
       select_page:function (currentPage) {
         console.log('currentPage:',currentPage);
+      },
+      make_layout_change(){
+        $(".imgs").pinterest_grid({
+          column: 5,
+          marginX: 20,
+          marginY: 15,
+          margin_bottom: 50
+        });
       }
     }
   }
@@ -136,7 +182,7 @@
   .img-box{
     font-size: 0;
     position:absolute;
-    border-radius: 20px;
+    border-radius: 10px;
     transform-origin: bottom;
     -webkit-transform-origin: bottom;
     box-shadow: 0 0px 20px .1px rgba(0,0,0,0.4);
@@ -158,19 +204,25 @@
     width: 100%;     
     height:100%;
     height: auto;
-    border-radius: 20px;
+    border-radius: 10px;
     object-fit: cover;
   }
   .el-icon-circle-close{
     color:#888;
     cursor:pointer;
-    font-size:20px;
+    font-size:30px;
     position: absolute;
-    top:-10px;
-    right:-10px;
+    top:-15px;
+    right:-15px;
   }
   .el-icon-circle-close:hover{
     color:red;
+  }
+  canvas{
+    position: absolute;
+    height:100%;
+    width:100%;
+    left:0;
   }
   @keyframes grow
   {

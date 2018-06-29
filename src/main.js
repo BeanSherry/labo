@@ -16,22 +16,32 @@ import './assets/js/config.js';
 import common from'./assets/js/common.js';
 const path = require('path')
 Vue.prototype.$common = common;
-Vue.prototype.$axios = axios.create();
-Vue.prototype.$axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-Vue.prototype.$axios.defaults.headers.post['Access-Control-Allow-Credentials'] = true;
-Vue.prototype.$axios.defaults.transformRequest = [function(data) {
-  return qs.stringify(data);
-}];
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.defaults.headers.post['Access-Control-Allow-Credentials'] = true;
+axios.interceptors.request.use(function (config) {
+  if(config.method==='post'){
+    config.data.stime=config.data.stime||common.getStime()
+    config.data.sign=common.md5NHex(Object.values(config.data).join(''),0)
+    config.data=qs.stringify(config.data);
+  }
+  return config;
+}, function (error) {
+  return Promise.reject(error);
+});
+
+// 添加响应拦截器
+axios.interceptors.response.use(function (response) {
+  if(response.status===403){
+    window.location.href='/login';
+  }
+  return response;
+}, function (error) {
+  return Promise.reject(error);
+});
+Vue.prototype.$axios = axios;
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(VueRouter);
-
-// Vue.component(Button.name, Button);
-// Vue.component(Select.name, Select);
-/* 或写为
- * Vue.use(Button)
- * Vue.use(Select)
- */
 
 /* eslint-disable no-new */
 new Vue({

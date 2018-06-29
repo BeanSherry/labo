@@ -1,5 +1,5 @@
 <template>
-  <el-header height="40px" v-bind:class="{ disnone: hideHeader }">
+  <el-header height="40px" v-if="!hideHeader" >
     <el-row :gutter="20">
       <el-col :span="16">
         <div class="grid-content title-container">
