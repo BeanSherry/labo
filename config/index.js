@@ -8,15 +8,23 @@ module.exports = {
   dev: {
 
     // Paths
-    assetsSubDirectory: 'static',//编译输出的二级目录
-    assetsPublicPath: '/',  //编译发布的根目录
+    assetsSubDirectory: 'static',
+    assetsPublicPath: '/',
     proxyTable: {
-      proxy: {
-        "/api": {
-          target: "http://test.monkeybean.cn:7001",
-          // secure: false,
-          changeOrigin: true,
-          pathRewrite: {"^/api" : ""} //后面可以使重写的新路径，一般不做更改
+      '/api': {
+        // target: 'http://127.0.0.1:8096/monkey', // 家
+        target: 'http://ssl.monkeybean.cn:7001/monkey', // 公司
+        // secure: false,  // 如果是https接口，需要配置这个参数
+        changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
+        pathRewrite: {
+          '^/api': '/'
+        }
+      },
+      '/emsTest': {
+        target: 'http://es6.ruanyifeng.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/emsTest': '/'
         }
       }
     },
@@ -24,12 +32,11 @@ module.exports = {
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
-    autoOpenBrowser: false,
+    autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
     /**
      * Source Maps
      */
@@ -46,13 +53,13 @@ module.exports = {
   },
 
   build: {
-    // 编译输入的index.html文件
+    // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../dist'),// 编译输出的静态资源路径
-    assetsSubDirectory: 'static',// 编译输出的二级目录
-    assetsPublicPath: '/',// 编译发布的根目录，可配置为资源服务器域名或 CDN 域名
+    assetsRoot: path.resolve(__dirname, '../dist'),
+    assetsSubDirectory: 'static',
+    assetsPublicPath: '/',
 
     /**
      * Source Maps
@@ -66,7 +73,7 @@ module.exports = {
     // Surge or Netlify already gzip all static assets for you.
     // Before setting to `true`, make sure to:
     // npm install --save-dev compression-webpack-plugin
-    productionGzip: false,// 是否开启 gzip
+    productionGzip: false,
     productionGzipExtensions: ['js', 'css'],
 
     // Run the build command with an extra argument to

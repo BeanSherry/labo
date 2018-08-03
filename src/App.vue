@@ -1,23 +1,22 @@
 <template>
-  <div id="app">
-    <!-- <img src="./assets/image/bean.png"> -->
-    <router-view/>
+  <div id="app"> 
+    <el-container>
+      <tab></tab>
+      <el-main class="nopadding">
+        <router-view/>
+      </el-main>
+    </el-container> 
   </div>
 </template>
-
 <script>
-export default {
-  name: 'App'
-}
+  import tab from '@/components/tab'
+  export default {
+    name: 'App',
+    components:{
+      tab
+    },
+  }
 </script>
+<style scoped="">
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>

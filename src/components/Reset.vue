@@ -1,13 +1,9 @@
 <template>
-  <div class="regist">
-    <div class="slogen">立即注册</div>
+  <div class="reset">
+    <div class="slogen">重置密码</div>
     <el-row class="phone-error ellipsis" v-show="isPhone">{{phoneText}}</el-row>
     <el-input placeholder="手机号" maxlength="11" v-model="phone" v-on:focus="isPhone=false;isIligle=false" clearable>
       <template slot="prepend"><i class="el-icon-labo-iconfontshouji el-icon-right"></i></template>
-    </el-input>
-    <el-row class="uname-error ellipsis" v-show="isName">{{nameText}}</el-row>
-    <el-input placeholder="用户名" minlength="2" v-model="uname" v-on:focus="isName=false;isIligle=false" clearable>
-      <template slot="prepend"><i class="el-icon-labo-yonghuming el-icon-right"></i></template>
     </el-input>
     <el-row class="pwd-error ellipsis" v-show="isPwd">{{pwdText}}</el-row>
     <el-input placeholder="密码" type="password" v-model="pwd" v-on:focus="isPwd=false;isIligle=false" clearable>
@@ -25,16 +21,15 @@
       </el-input>
       <el-button class="get-code" plain v-bind:disabled="GETMESS" v-on:click="getMessage">{{codeText}}</el-button>
     </div>
-    <el-button class="reg-btn" type="primary" v-bind:disabled="SUBMIT" plain v-on:click="regist">注册 <i class="el-icon-labo-zhuce-copy el-icon-right"></i></el-button>
+    <el-button class="reg-btn" type="primary" v-bind:disabled="SUBMIT" plain v-on:click="reset">重置 <i class="el-icon-labo-denglu1 el-icon-right"></i></el-button>
     <router-link to="/login">立即登录</router-link>
   </div>
 </template>
 <script>
   import $ from 'jquery'
-  import md5 from 'js-md5';
   import qs from 'qs';
   export default {
-    name: 'Login',
+    name: 'Reset',
     data () {
       return {
         phone: '',
@@ -59,15 +54,10 @@
       }
     },
     methods: {
-      regist: function () {
+      reset: function () {
         if(!/^1[3456789]\d{9}$/.test(this.phone)){
           this.isPhone=true;
           this.phoneText='手机号格式错误';
-          return;
-        }
-        if(!/.{2,20}/.test(this.uname)){
-          this.isName=true;
-          this.nameText='用户名格式错误';
           return;
         }
         if(!/^[a-zA-Z](?![a-zA-Z]+$)[0-9A-Za-z]{5,19}$/.test(this.pwd)){
@@ -79,14 +69,16 @@
           this.$message.error('请输入图片验证码')
           return;
         }
-        
-        let pwd=this.$options.methods.md5NHex(this.pwd,0)
+        if(!/\d{4}/.test(this.messageCode)){
+          this.$message.error('请输入短信验证码')
+          return;
+        }
+        let pwd=this.$common.md5NHex(this.pwd,0)
         let that=this;
         this.SUBMIT=true;
-        this.$axios.post('/api/identity/user/register', qs.stringify({
+        this.$axios.post('/api/identity/password/reset', qs.stringify({
             phone:this.phone,
             code:this.messageCode,
-            name:this.uname,
             pwd:pwd
           }),{
           headers:{
@@ -96,21 +88,15 @@
         .then(function (response) {
           that.SUBMIT=false
           if(response.data.code==0){
-            that.$router.push({ name: 'HelloWorld'})
+            that.$router.push({ name: 'Login'})
           }else{
             that.$message.error(response.data.des)
           }
         })
         .catch(function (error) {
           that.SUBMIT=false
-          that.$message.error(response.data.des)
+          that.$message.error(error.message)
         });
-      },
-      md5NHex:function(pwd,n){
-        for(let i=0;i<=n;i++){
-          pwd=md5(pwd)
-        }
-        return pwd
       },
       getMessage:function(){
         let that=this;
@@ -127,21 +113,26 @@
           }
         })
         .then(function (response) {
-          let clock=setInterval(function(argument) {
-            num--;
-            if(num>0){
-              that.codeText=num+'秒后重新获取';
-            }else{
-              clearInterval(clock);
-              that.GETMESS=false;
-              that.codeText='获取短信验证码';
-              num=59;
-            }
-          }, 1000)
+          if(response.data.code==0){
+            let clock=setInterval(function(argument) {
+              num--;
+              if(num>0){
+                that.codeText=num+'秒后重新获取';
+              }else{
+                clearInterval(clock);
+                that.GETMESS=false;
+                that.codeText='获取短信验证码';
+                num=59;
+              }
+            }, 1000)
+          }else{
+            that.$message.error(response.des)
+          }
+          
         })
         .catch(function (error) {
           that.GETMESS=false;
-          that.$message.error(error.message);
+          that.$message.error(error.message)
           return;
         });
       },
@@ -156,7 +147,7 @@
   a{
     color: #42b983;
   }
-  .regist{
+  .reset{
     display:flex;
     flex-direction:column;
     justify-content:space-between;
@@ -225,7 +216,7 @@
     align-self:flex-end;
   }
   .phone-error{
-    top:97px;;
+    top:106px;;
   }
   .server-error{
     top:234px;
@@ -237,6 +228,6 @@
     top:152px;
   }
   .pwd-error{
-    top:207px;
+    top:170px;
   }
 </style>
