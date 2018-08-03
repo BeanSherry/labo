@@ -15,7 +15,6 @@
     components:{
       tab
     },
-    
   }
 </script>
 <style scoped="">

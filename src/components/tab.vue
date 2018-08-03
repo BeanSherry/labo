@@ -43,14 +43,14 @@
     name:'tab-group', 
     props:[],
     watch:{ 
-      '$route':'tabActiveSlider' 
+      // '$route':'tabActiveSlider' 
     }, 
     data(){ 
       return { 
         'isChange':false,
         'active':this.$route.path,
-        'hideHeader':false,
-        'img':'',
+        'hideHeader':(this.$route.path=='/login'||this.$route.path=='/regist')?true:false,
+        'img':'/static/img/images.jpeg',
         'email':'',
         'nickname':'',
         'phone':'',
