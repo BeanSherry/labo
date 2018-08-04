@@ -19,6 +19,14 @@ Vue.prototype.$common = common;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.headers.post['Access-Control-Allow-Credentials'] = true;
 axios.interceptors.request.use(function (config) {
+  if(config.method==='get'){
+    if(!config.params){
+      config.params={}
+    }
+    config.params={};
+    config.params.stime=config.params.stime||common.getStime();
+    config.params.sign=common.md5NHex(Object.values(config.params).join(''),0)
+  }
   if(config.method==='post'){
     config.data.stime=config.data.stime||common.getStime()
     config.data.sign=common.md5NHex(Object.values(config.data).join(''),0)
@@ -31,11 +39,15 @@ axios.interceptors.request.use(function (config) {
 
 // 添加响应拦截器
 axios.interceptors.response.use(function (response) {
-  if(response.status===403){
-    window.location.href='/login';
-  }
   return response;
 }, function (error) {
+  if(error.response){
+    switch(error.response.status){
+      case 403:
+        window.location.href='/login';
+        break;
+    }
+  }
   return Promise.reject(error);
 });
 Vue.prototype.$axios = axios;
