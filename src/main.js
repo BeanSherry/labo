@@ -23,12 +23,16 @@ axios.interceptors.request.use(function (config) {
     if(!config.params){
       config.params={}
     }
-    config.params={};
     config.params.stime=config.params.stime||common.getStime();
     config.params.sign=common.md5NHex(Object.values(config.params).join(''),0)
   }
   if(config.method==='post'){
     config.data.stime=config.data.stime||common.getStime()
+    let origin='';
+    for(let key in config.data){
+      console.log(typeof config.data[key]);
+      // if(typeof config.data[key])
+    }
     config.data.sign=common.md5NHex(Object.values(config.data).join(''),0)
     config.data=qs.stringify(config.data);
   }

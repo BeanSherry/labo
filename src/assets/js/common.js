@@ -12,4 +12,19 @@ export default{
   getStime:function(){
     return (new Date().getTime()+TIMEINTERVAL).toString()
   },
+  removeByValue :function(arr,val) {
+    for(var i=0; i<arr.length; i++) {
+      if(arr[i] == val) {
+        arr.splice(i, 1);
+        break;
+      }
+    }
+  },
+  toggleValue:function(arr,val) {
+    if(arr.includes(val)){
+      this.removeByValue(arr,val);
+    }else{
+      arr.push(val);
+    }
+  }
 }

@@ -43,7 +43,22 @@
     name:'tab-group', 
     props:[],
     watch:{ 
-      '$route':'tabActiveSlider' 
+      '$route':'tabActiveSlider' ,
+      hideHeader:function(){
+        if(!this.hideHeader){
+          let that=this;
+          this.$axios.get('/api/identity/info/account')
+            .then(function (response) {
+              that.img='data:;base64,'+response.data.data.avatar;
+              that.email=response.data.data.email;
+              that.nickname=response.data.data.nickname;
+              that.phone=response.data.data.phone;
+            })
+            .catch(function (error) {
+              that.$message.error(error.message)
+          });
+        }
+      }
     }, 
     data(){ 
       return { 
@@ -56,21 +71,20 @@
         'phone':'',
       }; 
     },
-    mounted:function(argument) {
-      if(this.hideHeader){
-        return;
+    created:function () {
+      if(!this.hideHeader){
+        let that=this;
+        this.$axios.get('/api/identity/info/account')
+          .then(function (response) {
+            that.img='data:;base64,'+response.data.data.avatar;
+            that.email=response.data.data.email;
+            that.nickname=response.data.data.nickname;
+            that.phone=response.data.data.phone;
+          })
+          .catch(function (error) {
+            that.$message.error(error.message)
+        });
       }
-      let that=this;
-      this.$axios.get('/api/identity/info/account')
-        .then(function (response) {
-          that.img='data:;base64,'+response.data.data.avatar;
-          that.email=response.data.data.email;
-          that.nickname=response.data.data.nickname;
-          that.phone=response.data.data.phone;
-        })
-        .catch(function (error) {
-          that.$message.error(error.message)
-      });
     },
     methods:{ 
       'tabActiveSlider':function(){ 
@@ -195,6 +209,7 @@
     top:0;
     margin:auto;
     bottom:0;
+    object-fit: cover;
   }
   .el-icon-arrow-down{
     margin-left:30px;

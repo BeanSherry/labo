@@ -1,20 +1,35 @@
 <template>
 <div class="album">
   <mini :menu='menu' :status='status' :menuName="menuName" @select="onSelect"></mini>
+  <div class="btn-group">
+    <el-button type="danger" plain :class="{active:type==2}" @click="slelct_type(2)">全部</el-button>
+    <el-button type="danger" plain :class="{active:type==0}" @click="slelct_type(0)">隐私</el-button>
+    <el-button type="danger" plain :class="{active:type==1}" @click="slelct_type(1)">公共</el-button>
+  </div>
   <div class="imgs">
-    <div class="img-box" v-bind:class="{ del: selectType==1&&isdel }" v-for="(item,key) in imgs">
-      <i class="el-icon-circle-close" :data-id="key" v-show="selectType==1&&isdel" :index="key" @click="del_img(key)"></i>
-      <img :src="item">
-      <!-- <canvas></canvas> -->
+    <div class="img-box" v-bind:class="{ del: selectType==2||selectType==1 }" v-for="(item,key) in imgs" :mid="item.id">
+      <i class="el-icon-labo-weixuanzhong1" :data-id="key" v-show="selectType==2||selectType==1" :index="key" @click="del_img(item.id)" :class="isselected(item.id)"></i>
+      <span v-if="item.share" class="is-share"><i class="el-icon-labo-xing"></i></span>
+      <img :src="item.accessUrl">
     </div>
   </div>
-  <input type="file" accept="image/png,image/jpg,image/gif" style="display:none;">
+  <input type="file" multiple class="input-alb" accept="image/png,image/jpg,image/gif" style="display:none;" @change="upload_single">
   <el-pagination
     layout="total,prev, pager, next,jumper"
     @current-change="select_page"
-    :page-size="100"
-    :total="1000">
+    :page-size="page_size"
+    :total="total">
   </el-pagination>
+  <div class="change-confirm" v-if="selectType>0">
+    <p>已选择</p>
+    <p>{{count}}</p>
+    <p>张图片</p>
+    <div>
+      <p>确认{{text}}？</p>
+      <el-button type="danger" icon="el-icon-labo-duiconverted" circle @click="image_change"></el-button>
+      <el-button type="info" icon="el-icon-labo-cuoconverted" circle @click="cancle"></el-button>
+    </div>
+  </div>
 </div>  
 </template>
 <script>
@@ -31,35 +46,29 @@
     data(){
       return {
         menuName:'菜单',
+        page_size:2,
+        total:0,
+        current_page:1,
+        type:2,
         isdel:false,
-        selectType:0,
+        selectType:-1,
         delImg:[],
         menu:[
           {'value':'上传'},
+          {'value':'共享'},
           {'value':'删除'},
           {'value':'编辑'},
-          {'value':'选择'},
         ],
         status:'del',
-        imgs:[
-          '/static/img/1.png',
-          '/static/img/2.jpg',
-          '/static/img/3.jpg',
-          '/static/img/4.png',
-          '/static/img/5.jpg',
-          '/static/img/6.jpg',
-          '/static/img/7.jpg',
-          '/static/img/8.jpg',
-          '/static/img/9.jpg',
-          '/static/img/10.jpg',
-          '/static/img/11.jpg',
-          '/static/img/12.jpg',
-          '/static/img/13.jpg',
-          '/static/img/14.jpg',
-        ],
+        imgs:[],
+        change:[],
+        change_type:-1,
+        current_change:0,
+        text:''
       }; 
     },
     mounted:function (argument) {
+      this.getImage();
       $(".imgs").pinterest_grid({
         column: 5,
         marginX: 20,
@@ -68,96 +77,113 @@
       });
     },
     methods:{
-      del_img(index){
-        console.log(index);
-        // let node=$(event.target).parent().find('canvas');
-        // this.light(node)
-      },
-      light(node){
-        var canv = node[0];
-        var ctx = canv.getContext("2d");
-        var canvWidth = canv.width;
-        var canvHeight = canv.height;
-        var r = 0;
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        r = Math.floor(Math.random() * 5) * canvWidth / 50;
-        if (r <= 30) {
-            x += r;
-        } else {
-            x -= r;
-        }
-        y += Math.floor(Math.random() * 5) * canvHeight / 70;
-        ctx.lineTo(x, y);
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = "rgba(255, 255, 0, 1)"
-        ctx.stroke();
-        ctx.closePath();
-        if (y > canvHeight) {
-            ctx.clearRect(0, 0, canvWidth, canvHeight);
-            x = canvWidth / 2;
-            y = 0;
-        }
-        requestAnimationFrame(light);
 
+      cancle(){
+        this.change=[];
+        this.current_change=0;
+        this.selectType=-1;
+        this.isdel=false;
+      },
+      image_change(){
+        let that=this;
+        this.$axios.post('/api/operation/image/status/change',{
+          id:this.change,
+          operate:this.selectType
+        })
+        .then(function(argument) {
+          that.cancle();
+          that.getImage();
+        })
+        .catch(function(argument) {
+          that.cancle();
+        })
+      },
+      del_img(index){
+        let that=this;
+        $(event.target).toggleClass('selected');
+        this.$common.toggleValue(this.change,index); 
       },
       onSelect(index){
         this.selectType=index;
+        this.change=[];
         let that=this;
         switch (index) {
           case 0:
-            this.upload(that);
+            $('.input-alb').click();
             break;
           case 1:
-            this.isdel=!this.isdel;
+            this.current_change=1;//共享
+            this.text="更改共享状态"
             break;
           case 2:
-            console.log('编辑')
+            this.change_type=2;//删除
+            this.text='删除'
             break;
           case 3:
-            console.log('删除')
+            console.log('编辑')
             break;
           default:
             break;
         }
       },
-      upload:function(that) {
-        $('input').click();
-        $('input').change(function() {
-          let reader = new FileReader();
-          let AllowImgFileSize = 2100000;
-          let file = $(this)[0].files[0];
-          let imgUrlBase64;
-          if (file) {
-            imgUrlBase64 = reader.readAsDataURL(file);
-            reader.onload = function (e) {
-              if (AllowImgFileSize != 0 && AllowImgFileSize < reader.result.length) {
-                that.$message.error( '上传失败，请上传不大于2M的图片！');
-                return;
-              }else{
-                that.$axios.post('/api/operation/image/upload', {
-                  file64:reader.result.substring(reader.result.indexOf(",") + 1),
-                  name:file.name,
-                })
-                .then(function (response) {
-                  $('input').val('');
-                  that.SUBMIT=false
-                  if(response.data.code==0){
-                  }else{
-                    that.$message.error(response.data.des);
-                  }
-                })
-                .catch(function (error) {
-                  $('input').val('');
-                  that.$message.error(error.message)
-                });
-              }
+      upload_single:function() {
+        let that=this;
+        let reader = new FileReader();
+        let AllowImgFileSize = 2100000;
+        let file = $('.input-alb')[0].files[0];
+        let imgUrlBase64;
+        if (file) {
+          imgUrlBase64 = reader.readAsDataURL(file);
+          reader.onload = function (e) {
+            if (AllowImgFileSize != 0 && AllowImgFileSize < reader.result.length) {
+              that.$message.error( '上传失败，请上传不大于2M的图片！');
+              return;
+            }else{
+              that.$axios.post('/api/operation/image/upload', {
+                file64:reader.result.substring(reader.result.indexOf(",") + 1),
+                name:file.name,
+              })
+              .then(function (response) {
+                $('input').val('');
+                that.SUBMIT=false
+                if(response.data.code==0){
+                  that.getImage();
+                }else{
+                  that.$message.error(response.data.des);
+                }
+              })
+              .catch(function (error) {
+                $('input').val('');
+                that.$message.error(error.message)
+              });
             }
           }
+        }
+      },
+      upload_multiple:function() {
+        let that=this;
+        let file = Array.from($('.input-alb')[0].files);
+        that.$axios.post('/api/operation/image/multi/upload', {
+          fileImg:file,
+          name:'1'
         })
+        .then(function (response) {
+          $('input').val('');
+          that.SUBMIT=false
+          if(response.data.code==0){
+            that.getImage();
+          }else{
+            that.$message.error(response.data.des);
+          }
+        })
+        .catch(function (error) {
+          $('input').val('');
+          that.$message.error(error.message)
+        });
       },
       select_page:function (currentPage) {
-        console.log('currentPage:',currentPage);
+        this.current_page=currentPage;
+        this.getImage();
       },
       make_layout_change(){
         $(".imgs").pinterest_grid({
@@ -166,6 +192,45 @@
           marginY: 15,
           margin_bottom: 50
         });
+      },
+      getImage(){
+        let that=this;
+        this.$axios.get('/api/operation/list/image/get', {
+          params: {
+            sharetype: that.type,
+            current:that.current_page,
+            size:that.page_size,
+          }
+        })
+        .then(function (response) {
+          if(response.data.code==0){
+            that.imgs=response.data.data.imageList
+            that.total=response.data.data.totalCount
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      },
+      slelct_type(type){
+        if(this.type!=type){
+          this.type=type;
+          this.isdel=false;
+          this.change=[];
+          this.getImage();
+        }
+      },
+    },
+    computed: {
+      isselected () {
+        return function (index) {
+          return {
+            selected: this.change.includes(index)
+          }
+        }
+      },
+      count(){
+        return this.change.length;
       }
     }
   }
@@ -207,7 +272,8 @@
     border-radius: 10px;
     object-fit: cover;
   }
-  .el-icon-circle-close{
+  .el-icon-circle-close,
+  .el-icon-labo-weixuanzhong1{
     color:#888;
     cursor:pointer;
     font-size:30px;
@@ -215,7 +281,13 @@
     top:-15px;
     right:-15px;
   }
-  .el-icon-circle-close:hover{
+  .el-icon-labo-weixuanzhong1.selected:before { 
+    content: "\e664"; 
+  }
+  .el-icon-circle-close:hover,,
+  .el-icon-labo-weixuanzhong1:hover,
+  .el-icon-labo-weixuanzhong1.selected,
+  .el-icon-circle-close.selected{
     color:red;
   }
   canvas{
@@ -288,5 +360,27 @@
       -webkit-transform: rotate(0deg);
       transform: rotate(0deg);
     }
+  }
+  .change-confirm{
+    position: fixed;
+    right:0;
+    width:260px;
+    height: 260px;
+    top:320px;
+  }
+  .btn-group{
+    margin-bottom:30px;
+  }
+  .el-button.active{
+    background: #dd6161;
+    border-color: #dd6161;
+    color:#fff;
+  }
+  .is-share{
+    position: absolute;
+    color: #f56c6c;
+    padding: 10px;
+    background: rgba(0,0,0,.4);
+    border-radius: 0 50% 50%;
   }
 </style>
