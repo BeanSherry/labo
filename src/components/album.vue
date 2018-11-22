@@ -6,7 +6,10 @@
     <el-button type="danger" plain :class="{active:type==0}" @click="slelct_type(0)">隐私</el-button>
     <el-button type="danger" plain :class="{active:type==1}" @click="slelct_type(1)">公共</el-button>
   </div>
-  <div class="imgs">
+  <div class="onloading" v-show="!showImg">
+    <i class="el-icon-loading"></i>
+  </div>
+  <div class="imgs" v-show="showImg">
     <div class="img-box" v-bind:class="{ del: selectType==2||selectType==1 }" v-for="(item,key) in imgs" :mid="item.id">
       <i class="el-icon-labo-weixuanzhong1" :data-id="key" v-show="selectType==2||selectType==1" :index="key" @click="del_img(item.id)" :class="isselected(item.id)"></i>
       <span v-if="item.share" class="is-share"><i class="el-icon-labo-xing"></i></span>
@@ -46,13 +49,14 @@
     data(){
       return {
         menuName:'菜单',
-        page_size:2,
+        page_size:12,
         total:0,
         current_page:1,
         type:2,
         isdel:false,
         selectType:-1,
         delImg:[],
+        showImg:false,
         menu:[
           {'value':'上传'},
           {'value':'共享'},
@@ -69,12 +73,6 @@
     },
     mounted:function (argument) {
       this.getImage();
-      $(".imgs").pinterest_grid({
-        column: 5,
-        marginX: 20,
-        marginY: 15,
-        margin_bottom: 50
-      });
     },
     methods:{
 
@@ -186,15 +184,26 @@
         this.getImage();
       },
       make_layout_change(){
-        $(".imgs").pinterest_grid({
-          column: 5,
-          marginX: 20,
-          marginY: 15,
-          margin_bottom: 50
-        });
+        var that=this;
+        if($(".img-box").length>0){
+          console.log('change')
+          $('.imgs').show();
+          $(".imgs").pinterest_grid({
+            width:1200,
+            column: 5,
+            marginX: 20,
+            marginY: 15,
+            margin_bottom: 50
+          });
+        }else{
+          setTimeout(function() {
+          that.make_layout_change();
+        }, 200);
+        }
       },
       getImage(){
         let that=this;
+        that.showImg=false;
         this.$axios.get('/api/operation/list/image/get', {
           params: {
             sharetype: that.type,
@@ -203,10 +212,13 @@
           }
         })
         .then(function (response) {
+          that.showImg=true;
+          console.log('show')
           if(response.data.code==0){
             that.imgs=response.data.data.imageList
             that.total=response.data.data.totalCount
           }
+          
         })
         .catch(function (error) {
           console.log(error);
@@ -246,16 +258,13 @@
   }
   .img-box{
     font-size: 0;
+    opacity: 0;
     position:absolute;
     border-radius: 10px;
     transform-origin: bottom;
     -webkit-transform-origin: bottom;
     box-shadow: 0 0px 20px .1px rgba(0,0,0,0.4);
     transition:transform 2s;
-  }
-  .img-box:hover{
-    // transform:scale(2);
-    // z-index: 1;
   }
   .img-box.del{
     animation: del-move .4s 0s infinite  ease-in-out;

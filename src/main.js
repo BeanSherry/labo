@@ -30,10 +30,14 @@ axios.interceptors.request.use(function (config) {
     config.data.stime=config.data.stime||common.getStime()
     let origin='';
     for(let key in config.data){
-      console.log(typeof config.data[key]);
-      // if(typeof config.data[key])
+      if(config.data[key] instanceof Array){
+        origin+=config.data[key].join('');
+      }else{
+        origin+=config.data[key];
+      }
     }
-    config.data.sign=common.md5NHex(Object.values(config.data).join(''),0)
+    config.data.sign=common.md5NHex(origin,0)
+    // config.data.sign=common.md5NHex(Object.values(config.data).join(''),0)
     config.data=qs.stringify(config.data);
   }
   return config;

@@ -90,7 +90,7 @@
     animation-duration: 1s;
     animation-fill-mode: both;
     position: fixed;
-    width: 260px;
+    width: 175px;
     height: 260px;
     right:0;
     -webkit-filter: url(#goo);
