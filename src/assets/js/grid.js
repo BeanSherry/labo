@@ -46,7 +46,6 @@
                   left:article_width * index +index%self.options.column *self.options.marginX
               })
           }else{
-              //获取高度最小的列
               var minHeight=Math.min.apply(null,columnHeight);
               var minIndex=columnHeight.indexOf(minHeight);
               $(el).css({
@@ -73,10 +72,6 @@
   $.fn[pluginName] = function (options) {
       return this.each(function () {
         new Plugin(this, options);
-        //   if (!$.data(this, 'plugin_' + pluginName)) {
-        //       $.data(this, 'plugin_' + pluginName,
-        //       new Plugin(this, options));
-        //   }
       });
   }
  })(jQuery,window, document)

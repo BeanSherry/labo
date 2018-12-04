@@ -1,21 +1,27 @@
 <template ref="login" hideHeader='true'>
   <div class="login">
     <div class="slogen">Labo</div>
-    <el-row class="phone-error ellipsis" v-show="isPhone">{{phoneText}}</el-row>
-    <el-input placeholder="手机号或邮箱" v-on:focus="isPhone=false;isIligle=false" v-model="phone" clearable>
-      <template slot="prepend"><i class="el-icon-labo-yonghuming el-icon-right"></i></template>
-    </el-input>
-    <el-row class="pwd-error ellipsis" v-show="isPwd">{{pwdText}}</el-row>
-    <el-input placeholder="密码" v-on:focus="isPwd=false;isIligle=false" type="password" v-model="pwd" clearable>
-      <template slot="prepend"><i class="el-icon-labo-mima el-icon-right"></i></template>
-    </el-input>
+    <div class="l-group">
+      <el-row class="l-error ellipsis" v-show="isPhone">{{phoneText}}</el-row>
+      <el-input placeholder="手机号或邮箱" v-on:focus="isPhone=false;isIligle=false" v-model="phone" clearable>
+        <template slot="prepend"><i class="el-icon-labo-yonghuming el-icon-right"></i></template>
+      </el-input>
+    </div>
+    <div class="l-group">
+      <el-row class="l-error ellipsis" v-show="isPwd">{{pwdText}}</el-row>
+      <el-input placeholder="密码" v-on:focus="isPwd=false;isIligle=false" type="password" v-model="pwd" clearable>
+        <template slot="prepend"><i class="el-icon-labo-mima el-icon-right"></i></template>
+      </el-input>
+    </div>
     <router-link class="forget-pwd" to="/reset">忘记密码</router-link>
-    <el-input placeholder="you don't know" v-model="resToken" clearable>
+    <el-input placeholder="you don't know" type="password" v-model="resToken" clearable>
       <template slot="prepend"><i class="el-icon-labo-smile el-icon-right"></i></template>
     </el-input>
     <!-- <div class="g-recaptcha" data-sitekey="6LcmD10UAAAAAODBg6yb1GUNlNMAe5LL-4FW7f5M"></div> -->
-    <el-row class="server-error ellipsis" v-show="isIligle">{{serverText}}</el-row>
-    <el-checkbox v-model="hold">保持登录</el-checkbox>
+    <div class="l-group">
+      <el-row class="l-error server-error ellipsis" v-show="isIligle">{{serverText}}</el-row>
+      <el-checkbox v-model="hold">保持登录</el-checkbox>
+    </div>
     <el-button type="primary" v-bind:disabled="SUBMIT" plain v-on:click="login">登录 <i class="el-icon-labo-denglu1 el-icon-right"></i></el-button>
     <router-link to="/regist">立即注册</router-link>
   </div>
@@ -84,6 +90,10 @@
   }
 </script>
 <style scoped lang="scss">
+  .l-group{
+    position: relative;
+    width:100%;
+  }
   a{
     color: #42b983;
   }
@@ -126,20 +136,21 @@
     max-width: 200px;
     align-self:flex-end;
   }
-  .phone-error{
-    top:87px;;
+  .l-error{
+    position: absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    margin:auto;
   }
   .server-error{
-    top:234px;
-    align-self:center;
-    background: transparent;
-    padding:0;
+    background:transparent;
+    right:auto;
+    left:0;
+    max-width:300px;
   }
   .forget-pwd{
     align-self:flex-end;
-  }
-  .pwd-error{
-    top:133px;
   }
   .input-group{
     width:100%;
