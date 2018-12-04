@@ -15,34 +15,20 @@
     this.init();
   }
   Plugin.prototype.init = function () {
-      var self = this,
-          resize_finish;
-
-      $(window).resize(function() {
-          clearTimeout(resize_finish);
-          resize_finish = setTimeout( function () {
-              self.make_layout_change(self);
-          }, 11);
-      });
-
-      self.make_layout_change(self);
-
-      setTimeout(function() {
-          $(window).resize();
-      }, 500);
+      this.make_layout_change(this);
   };
   Plugin.prototype.calculate = function (single_column_mode) {
-      var self = this,
-        $container = $(this.element),
-        container_width = $container.width();
-        $article = $(this.element).children();
-        columnHeight=new Array(self.options.column);
-        row=new Array(self.options.column);
+      var self = this;
+      var $container = $(this.element);
+      var container_width =self.options.width|| $container.width();
+      var $article = $(this.element).children();
+      var columnHeight=new Array(self.options.column);
+      var row=new Array(self.options.column);
 
       if(single_column_mode === true) {
-        article_width = $container.width() - self.options.marginX;
+        article_width = container_width - self.options.marginX;
       } else {
-        article_width = ($container.width() - self.options.marginX * (self.options.column-1)) / self.options.column;
+        article_width = (container_width - self.options.marginX * (self.options.column-1)) / self.options.column;
       }
       $article.each(function() {
           $(this).css('width', article_width);
@@ -56,14 +42,15 @@
               columnHeight[index]=$(el).outerHeight();
               $(el).css({
                   position:'absolute',
+                  opacity:1,
                   left:article_width * index +index%self.options.column *self.options.marginX
               })
           }else{
-              //获取高度最小的列
               var minHeight=Math.min.apply(null,columnHeight);
               var minIndex=columnHeight.indexOf(minHeight);
               $(el).css({
                   position:'absolute',
+                  opacity:1,
                   top:columnHeight[minIndex] +(row[minIndex] +1)*self.options.marginY ,
                   left:article_width * minIndex +minIndex%self.options.column *self.options.marginX
               })
@@ -84,10 +71,7 @@
   };
   $.fn[pluginName] = function (options) {
       return this.each(function () {
-          if (!$.data(this, 'plugin_' + pluginName)) {
-              $.data(this, 'plugin_' + pluginName,
-              new Plugin(this, options));
-          }
+        new Plugin(this, options);
       });
   }
  })(jQuery,window, document)

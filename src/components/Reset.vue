@@ -1,14 +1,18 @@
 <template>
   <div class="reset">
     <div class="slogen">重置密码</div>
-    <el-row class="phone-error ellipsis" v-show="isPhone">{{phoneText}}</el-row>
-    <el-input placeholder="手机号" maxlength="11" v-model="phone" v-on:focus="isPhone=false;isIligle=false" clearable>
-      <template slot="prepend"><i class="el-icon-labo-iconfontshouji el-icon-right"></i></template>
-    </el-input>
-    <el-row class="pwd-error ellipsis" v-show="isPwd">{{pwdText}}</el-row>
-    <el-input placeholder="密码" type="password" v-model="pwd" v-on:focus="isPwd=false;isIligle=false" clearable>
-      <template slot="prepend"><i class="el-icon-labo-mima el-icon-right"></i></template>
-    </el-input>
+    <div class="l-group">
+      <el-row class="l-error ellipsis" v-show="isPhone">{{phoneText}}</el-row>
+      <el-input placeholder="手机号" maxlength="11" v-model="phone" v-on:focus="isPhone=false;isIligle=false" clearable>
+        <template slot="prepend"><i class="el-icon-labo-iconfontshouji el-icon-right"></i></template>
+      </el-input>
+    </div>
+    <div class="l-group">
+      <el-row class="l-error ellipsis" v-show="isPwd">{{pwdText}}</el-row>
+      <el-input placeholder="密码" type="password" v-model="pwd" v-on:focus="isPwd=false;isIligle=false" clearable>
+        <template slot="prepend"><i class="el-icon-labo-mima el-icon-right"></i></template>
+      </el-input>
+    </div>
     <div class="code-box">
       <el-input placeholder="图片验证码" class="p-code" v-model="code" clearable>
         <template slot="prepend"><i class="el-icon-labo-code el-icon-right"></i></template>
@@ -146,6 +150,17 @@
   $bg_hover:rgb(102,186,183);
   a{
     color: #42b983;
+  }
+  .l-error{
+    position: absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    margin:auto;
+  }
+  .l-group{
+    position: relative;
+    width:100%;
   }
   .reset{
     display:flex;

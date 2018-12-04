@@ -64,7 +64,7 @@
       return { 
         'isChange':false,
         'active':this.$route.path,
-        'hideHeader':(this.$route.path=='/login'||this.$route.path=='/regist')?true:false,
+        'hideHeader':(this.$route.path=='/login'||this.$route.path=='/regist'||this.$route.path=='/reset')?true:false,
         'img':'/static/img/images.jpeg',
         'email':'',
         'nickname':'',
