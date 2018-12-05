@@ -84,7 +84,7 @@
       },
       image_change(){
         let that=this;
-        this.$axios.post('/api/operation/image/status/change',{
+        this.$axios.post('/monkey/operation/image/status/change',{
           id:this.change,
           operate:this.selectType
         })
@@ -137,7 +137,7 @@
               that.$message.error( '上传失败，请上传不大于2M的图片！');
               return;
             }else{
-              that.$axios.post('/api/operation/image/upload', {
+              that.$axios.post('/monkey/operation/image/upload', {
                 file64:reader.result.substring(reader.result.indexOf(",") + 1),
                 name:file.name,
               })
@@ -161,7 +161,7 @@
       upload_multiple:function() {
         let that=this;
         let file = Array.from($('.input-alb')[0].files);
-        that.$axios.post('/api/operation/image/multi/upload', {
+        that.$axios.post('/monkey/operation/image/multi/upload', {
           fileImg:file,
           name:'1'
         })
@@ -204,7 +204,7 @@
       getImage(){
         let that=this;
         that.showImg=false;
-        this.$axios.get('/api/operation/list/image/get', {
+        this.$axios.get('/monkey/operation/list/image/get', {
           params: {
             sharetype: that.type,
             current:that.current_page,

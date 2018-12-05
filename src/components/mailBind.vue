@@ -46,7 +46,7 @@
         }
         let that=this;
         this.SUBMIT=true;
-        this.$axios.post('/api/identity/mail/bind', {
+        this.$axios.post('/monkey/identity/mail/bind', {
           mail:this.mail
         })
         .then(function (response) {

@@ -47,7 +47,7 @@
       hideHeader:function(){
         if(!this.hideHeader){
           let that=this;
-          this.$axios.get('/api/identity/info/account')
+          this.$axios.get('/monkey/identity/info/account')
             .then(function (response) {
               that.img='data:;base64,'+response.data.data.avatar;
               that.email=response.data.data.email;
@@ -74,7 +74,7 @@
     created:function () {
       if(!this.hideHeader){
         let that=this;
-        this.$axios.get('/api/identity/info/account')
+        this.$axios.get('/monkey/identity/info/account')
           .then(function (response) {
             that.img='data:;base64,'+response.data.data.avatar;
             that.email=response.data.data.email;
@@ -96,7 +96,7 @@
         }
       },
       logout:function(that) {
-        that.$axios.get('/api/identity/logout')
+        that.$axios.get('/monkey/identity/logout')
         .then(function (response) {
           that.$router.push({ name: 'Login'})
         })

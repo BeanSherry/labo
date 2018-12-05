@@ -65,7 +65,7 @@
         let that=this;
         let sign=md5(this.phone+pwd+this.resToken+this.hold+stime)
         this.SUBMIT=true;
-        this.$axios.post('/api/identity/user/login', {
+        this.$axios.post('/monkey/identity/user/login', {
           user:this.phone,
           pwd:pwd,
           response :this.resToken,

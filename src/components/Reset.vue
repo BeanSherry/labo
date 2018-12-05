@@ -45,7 +45,7 @@
         code:'',
         codeText:'获取短信验证码',
         imgId:'1',
-        kapchas:'/api/identity/kapcha',
+        kapchas:'/monkey/identity/kapcha',
         messageCode:'',
         isPhone:false,
         phoneText:'',
@@ -80,7 +80,7 @@
         let pwd=this.$common.md5NHex(this.pwd,0)
         let that=this;
         this.SUBMIT=true;
-        this.$axios.post('/api/identity/password/reset', qs.stringify({
+        this.$axios.post('/monkey/identity/password/reset', qs.stringify({
             phone:this.phone,
             code:this.messageCode,
             pwd:pwd
@@ -110,7 +110,7 @@
           return;
         }
         this.GETMESS=true;
-        this.$axios.get('/api/identity/message/apply', {
+        this.$axios.get('/monkey/identity/message/apply', {
           params: {
             phone: this.phone,
             code:this.code
@@ -141,7 +141,7 @@
         });
       },
       getImage:function(){
-        this.kapchas = '/api/identity/kapcha?'+ Math.random();
+        this.kapchas = '/monkey/identity/kapcha?'+ Math.random();
       }
     }
   }

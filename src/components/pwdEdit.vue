@@ -115,7 +115,7 @@
         let newpwd=this.$common.md5NHex(this.newpwd)
         let that=this;
         this.SUBMIT=true;
-        this.$axios.post('/api/identity/password/update', {
+        this.$axios.post('/monkey/identity/password/update', {
           oldpwd:oldpwd,
           newpwd:newpwd,
           stime:stime

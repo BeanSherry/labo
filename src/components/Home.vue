@@ -38,7 +38,7 @@ export default {
   },
   created:function(argument) {
     let that=this;
-    this.$axios.get('/api/general/sys/time/get')
+    this.$axios.get('/monkey/general/sys/time/get')
       .then(function (response) {
         that.$common.TIMEINTERVAL=response.data.data-new Date().getTime()
       })
