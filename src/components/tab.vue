@@ -20,12 +20,12 @@
             <li class="header-user dropdown">
               <el-dropdown :hide-on-click="true" @command="handleCommand" trigger="click">
                 <span class="el-dropdown-link">
-                  <img class="header-user-avatar" :src="img">
+                  <img class="header-user-avatar" :src="userDate.avatar">
                   <i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>{{nickname}}</el-dropdown-item>
-                  <el-dropdown-item>{{email}}</el-dropdown-item>
+                  <el-dropdown-item>{{userDate.nickname}}</el-dropdown-item>
+                  <el-dropdown-item>{{userDate.email}}</el-dropdown-item>
                   <el-dropdown-item command="setting" divided>Setting</el-dropdown-item>
                   <el-dropdown-item>Help</el-dropdown-item>
                   <el-dropdown-item command="logout" divided>Sign out</el-dropdown-item>
@@ -41,55 +41,25 @@
 <script> 
   export default{
     name:'tab-group', 
-    props:[],
-    watch:{ 
-      '$route':'tabActiveSlider' ,
-      hideHeader:function(){
-        if(!this.hideHeader){
-          let that=this;
-          this.$axios.get('/monkey/identity/info/account')
-            .then(function (response) {
-              that.img='data:;base64,'+response.data.data.avatar;
-              that.email=response.data.data.email;
-              that.nickname=response.data.data.nickname;
-              that.phone=response.data.data.phone;
-            })
-            .catch(function (error) {
-              that.$message.error(error.message)
-          });
-        }
-      }
-    }, 
+    props:['msg','hideHeader','userDate'],
     data(){ 
       return { 
         'isChange':false,
         'active':this.$route.path,
-        'hideHeader':(this.$route.path=='/login'||this.$route.path=='/regist'||this.$route.path=='/reset')?true:false,
         'img':'./static/img/images.jpeg',
         'email':'',
         'nickname':'',
         'phone':'',
       }; 
     },
-    created:function () {
-      if(!this.hideHeader){
-        let that=this;
-        this.$axios.get('/monkey/identity/info/account')
-          .then(function (response) {
-            that.img='data:;base64,'+response.data.data.avatar;
-            that.email=response.data.data.email;
-            that.nickname=response.data.data.nickname;
-            that.phone=response.data.data.phone;
-          })
-          .catch(function (error) {
-            that.$message.error(error.message)
-        });
-      }
-    },
     methods:{ 
+      test1(){
+        console.log(1)
+        this.$emit('text','main');
+      },
       'tabActiveSlider':function(){ 
         this.active=this.$route.path;
-        if(this.$route.path=='/login'||this.$route.path=='/regist'){
+        if(this.$route.path=='/login'||this.$route.path=='/regist'||this.$route.path=='/reset'){
           this.hideHeader=true;
         }else{
           this.hideHeader=false;

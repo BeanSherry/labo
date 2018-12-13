@@ -15,11 +15,11 @@
     </div>
     <div class="l-group">
       <el-row class="l-error ellipsis" v-show="isPwd">{{pwdText}}</el-row>
-      <el-input placeholder="密码" type="password" v-model="pwd" v-on:focus="isPwd=false;isIligle=false" clearable>
+      <el-input placeholder="密码" v-on:focus="isPwd=false;isIligle=false" v-bind:type=" showPwd ? 'text' : 'password' " v-model="pwd" clearable>
         <template slot="prepend"><i class="el-icon-labo-mima el-icon-right"></i></template>
       </el-input>
+      <i  v-on:click="showP" v-bind:class="[showPwd ? 'el-icon-labo-kejian3' : 'el-icon-labo-bukejian' ,'el-icon-eye']"></i>
     </div>
-      
     <div class="code-box">
       <el-input placeholder="图片验证码" class="p-code" v-model="code" clearable>
         <template slot="prepend"><i class="el-icon-labo-code el-icon-right"></i></template>
@@ -62,10 +62,14 @@
         isPwd:false,
         pwdText:'',
         isIligle:false,
-        serverText:'用户名不存在或密码错误'
+        serverText:'用户名不存在或密码错误',
+        showPwd:false
       }
     },
     methods: {
+      showP(){
+        this.showPwd=!this.showPwd;
+      },
       regist: function () {
         if(!/^1[3456789]\d{9}$/.test(this.phone)){
           this.isPhone=true;
@@ -176,6 +180,17 @@
   .l-group{
     position: relative;
     width:100%;
+  }
+  .el-icon-eye{
+    height:10px;
+    font-size: 10px;
+    position:absolute;
+    top:0;
+    bottom:0;
+    right:30px;
+    margin:auto;
+    cursor: pointer;
+    color:#909399;
   }
   .regist{
     display:flex;

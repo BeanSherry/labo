@@ -10,7 +10,7 @@
       :default-active="activeIndex"
       :collapse="isCollapse"
       background-color="#fff">
-        <el-menu-item index="1">
+        <el-menu-item index="1" disabled>
           <i class="el-icon-labo-shezhi"></i>
           <span slot="title">User Settings</span>
         </el-menu-item>
@@ -29,7 +29,7 @@
       </el-menu>
     </el-aside>
     <el-main>
-    <router-view/>
+    <router-view  v-bind:userDate="userDate" />
     </el-main>
   </el-container>
 </template>
@@ -38,6 +38,7 @@
   import mailBind from '@/components/mailBind'
   export default{
     name:'set',
+    props:['userDate'],
     components:{
       pwdEdit,
       mailBind,
@@ -45,7 +46,7 @@
     data(){
       return {
         isCollapse: false,
-        activeIndex:"1"
+        activeIndex:"2"
       };
     },
     methods:{
@@ -90,6 +91,9 @@
   .el-menu-item.is-active{
     box-shadow: inset 4px 0 0 #4b4ba3;
     color:#4b4ba3;
+  }
+  .el-menu-item.is-disabled{
+    opacity: .7;
   }
 </style>
 

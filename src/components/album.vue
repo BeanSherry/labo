@@ -186,7 +186,6 @@
       make_layout_change(){
         var that=this;
         if($(".img-box").length==that.imgs.length && that.checkImg()){
-          console.log('change')
           $('.imgs').show();
           $(".imgs").pinterest_grid({
             width:1200,
