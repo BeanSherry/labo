@@ -65,9 +65,8 @@
         serverText:'',
         bdcrumb:[
           {'value':'首页',url:'/'},
-          {'value':'setting'},
-          {'value':'password'},
-          {'value':'edit'},
+          {'value':'User Settings'},
+          {'value':'password edit'},
         ],
         content:[
           {'value':'以字母开头','icon':'el-icon-labo-yuan-copy'},
@@ -75,6 +74,9 @@
           {'value':'长度为6～20位字符','icon':'el-icon-labo-yuan-copy'},
         ]
       };
+    },
+    created:function () {
+      this.$emit('changeActive','4');
     },
     methods:{
       changeStatus:function(argument) {
@@ -138,6 +140,9 @@
   }
 </script>
 <style scoped lang="scss">
+  .pwde-main{
+    margin:10px 0;
+  }
   .el-input{
     width:200px;
   }

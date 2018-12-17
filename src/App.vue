@@ -1,9 +1,9 @@
 <template>
   <div id="app"> 
     <el-container>
-      <tab v-bind:msg="msg" v-bind:userDate="userDate" v-bind:hideHeader="hideHeader" @text="text"></tab>
+      <tab v-bind:msg="msg" v-bind:userDate="userDate" v-bind:hideHeader="hideHeader"></tab>
       <el-main class="nopadding">
-        <router-view v-bind:userDate="userDate" />
+        <router-view v-bind:userDate="userDate"/>
       </el-main>
     </el-container> 
   </div>
@@ -15,8 +15,8 @@
     components:{
       tab
     },
-    watch:{ 
-      '$route':'tabActiveSlider' ,
+    watch:{
+      '$route':'toggleHeader' ,
       hideHeader:function(){
         if(!this.hideHeader){
           this.getInfo();
@@ -28,9 +28,9 @@
         msg:'text',
         userDate:{
           'img':'./static/img/images.jpeg',
-        'email':'',
-        'nickname':'',
-        'phone':'',
+          'email':'',
+          'nickname':'',
+          'phone':'',
         },
         'hideHeader':(this.$route.path=='/login'||this.$route.path=='/regist'||this.$route.path=='/reset')?true:false,
       }
@@ -41,18 +41,6 @@
       }
     },
     methods:{
-      text(msg){
-        console.log(2)
-        this.msg=msg;
-      },
-      'tabActiveSlider':function(){ 
-        this.active=this.$route.path;
-        if(this.$route.path=='/login'||this.$route.path=='/regist'||this.$route.path=='/reset'){
-          this.hideHeader=true;
-        }else{
-          this.hideHeader=false;
-        }
-      },
       getInfo(){
         let that=this;
         this.$axios.get('/monkey/identity/info/account')
@@ -67,6 +55,13 @@
           .catch(function (error) {
             // that.$message.error(error.message)
         });
+      },
+      toggleHeader(){
+        if(this.$route.path=='/login'||this.$route.path=='/regist'||this.$route.path=='/reset'){
+          this.hideHeader=true;
+        }else{
+          this.hideHeader=false;
+        }
       }
     }
   }

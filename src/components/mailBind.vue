@@ -4,7 +4,7 @@
     <div class="pwde-main">
       <el-row>
         <el-row class="main-label" v-if="userDate.email==''">请输入有效的邮箱地址：</el-row>
-        <el-row class="main-label" v-else>绑定邮箱</el-row>
+        <el-row class="main-label" v-else>已绑定邮箱：</el-row>
         <el-input
           v-on:focus="isMail=false;"
           v-model="userDate.email"
@@ -36,10 +36,14 @@
         isMail:false,
         mailText:'',
         bdcrumb:[
-          {'value':'User Settings',url:'/set'},
-          {'value':'mailBind',url:'/set/mailBind'},
+          {'value':'首页',url:'/'},
+          {'value':'User Settings'},
+          {'value':'bind mai'},
         ]
       }; 
+    },
+    created:function () {
+      this.$emit('changeActive','3');
     },
     methods:{
       mailBind:function(argument) {

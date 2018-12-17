@@ -28,18 +28,20 @@
         </el-menu-item>
       </el-menu>
     </el-aside>
-    <el-main>
-    <router-view  v-bind:userDate="userDate" />
+    <el-main class="setting-main">
+    <router-view  v-bind:userDate="userDate" @changeActive="changeActive" />
     </el-main>
   </el-container>
 </template>
 <script>
+  import profile from '@/components/profile'
   import pwdEdit from '@/components/pwdEdit'
   import mailBind from '@/components/mailBind'
   export default{
     name:'set',
     props:['userDate'],
     components:{
+      profile,
       pwdEdit,
       mailBind,
     },
@@ -62,7 +64,7 @@
             this.$router.push({ name: 'set'});
             break;
           case '2':
-            this.$router.push({ name: 'set'});
+            this.$router.push({ name: 'profile'});
             break;
           case '3':
             this.$router.push({ name: 'mailBind'});
@@ -73,6 +75,9 @@
           default:
             break;
         }
+      },
+      changeActive(index){
+        this.activeIndex=index;
       }
     }
   }
@@ -80,6 +85,9 @@
 <style lang="scss">
   .el-aside{
     padding:10px 0
+  }
+  .setting-main{
+    min-width:1000px;
   }
   .el-menu-item{
     text-align: left;

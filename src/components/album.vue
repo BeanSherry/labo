@@ -23,12 +23,12 @@
     :page-size="page_size"
     :total="total">
   </el-pagination>
-  <div class="change-confirm" v-if="selectType>0">
+  <div class="change-confirm" v-if="selectType>0 && count>0">
     <p>已选择</p>
     <p>{{count}}</p>
     <p>张图片</p>
     <div>
-      <p>确认{{text}}？</p>
+      <p class="confim-text">确认{{text}}？</p>
       <el-button type="danger" icon="el-icon-labo-duiconverted" circle @click="image_change"></el-button>
       <el-button type="info" icon="el-icon-labo-cuoconverted" circle @click="cancle"></el-button>
     </div>
@@ -380,9 +380,12 @@
   .change-confirm{
     position: fixed;
     right:0;
-    width:260px;
-    height: 260px;
+    width:200px;
+    height: 200px;
     top:320px;
+  }
+  .confim-text{
+    margin:10px 0;
   }
   .btn-group{
     margin-bottom:30px;

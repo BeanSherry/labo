@@ -42,6 +42,9 @@
   export default{
     name:'tab-group', 
     props:['msg','hideHeader','userDate'],
+    watch:{
+      '$route':'tabActiveSlider' ,
+    },
     data(){ 
       return { 
         'isChange':false,
@@ -53,10 +56,6 @@
       }; 
     },
     methods:{ 
-      test1(){
-        console.log(1)
-        this.$emit('text','main');
-      },
       'tabActiveSlider':function(){ 
         this.active=this.$route.path;
         if(this.$route.path=='/login'||this.$route.path=='/regist'||this.$route.path=='/reset'){
@@ -77,7 +76,7 @@
       handleCommand:function(command) {
         switch (command) {
           case 'setting':
-            this.$router.push({ name: 'set'})
+            this.$router.push({ name: 'profile'})
             break;
           case 'logout':
             this.$options.methods.logout(this);
