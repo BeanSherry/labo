@@ -9,6 +9,7 @@ import Upload from '@/components/Upload'
 import tab from '@/components/tab'
 import breadcrumb from '@/components/breadcrumb'
 import set from '@/components/Set'
+import profile from '@/components/profile'
 import pwdEdit from '@/components/pwdEdit'
 import mailBind from '@/components/mailBind'
 import mini from '@/components/mini'
@@ -53,6 +54,11 @@ export default new Router({
       name: 'set',
       component: set,
       children:[
+        {
+          path: '/set/profile',
+          name: 'profile',
+          component:profile,
+        },
         {
           path: '/set/pwdEdit',
           name: 'pwdEdit',

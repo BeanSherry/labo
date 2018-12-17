@@ -15,14 +15,19 @@
       return {
       }; 
     },
+    mounted(){
+      this.test();
+    },
     methods:{
-
+      test(){
+        this.$emit('msg','main');
+      }
     }
   }
 </script>
 <style scoped lang="scss">
   .el-breadcrumb{
     height:40px;
-    ling-height:40px;
+    line-height:40px;
   }
 </style>

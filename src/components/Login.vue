@@ -9,12 +9,13 @@
     </div>
     <div class="l-group">
       <el-row class="l-error ellipsis" v-show="isPwd">{{pwdText}}</el-row>
-      <el-input placeholder="密码" v-on:focus="isPwd=false;isIligle=false" type="password" v-model="pwd" clearable>
+      <el-input placeholder="密码" v-on:focus="isPwd=false;isIligle=false" v-bind:type=" showPwd ? 'text' : 'password' " v-model="pwd" clearable>
         <template slot="prepend"><i class="el-icon-labo-mima el-icon-right"></i></template>
       </el-input>
+      <i  v-on:click="showP" v-bind:class="[showPwd ? 'el-icon-labo-kejian3' : 'el-icon-labo-bukejian' ,'el-icon-eye']"></i>
     </div>
     <router-link class="forget-pwd" to="/reset">忘记密码</router-link>
-    <el-input placeholder="you don't know" type="password" v-model="resToken" clearable>
+    <el-input placeholder="you don't know" type="text" v-model="resToken" clearable>
       <template slot="prepend"><i class="el-icon-labo-smile el-icon-right"></i></template>
     </el-input>
     <!-- <div class="g-recaptcha" data-sitekey="6LcmD10UAAAAAODBg6yb1GUNlNMAe5LL-4FW7f5M"></div> -->
@@ -45,10 +46,14 @@
         pwdText:'',
         isIligle:false,
         hideHeaderL:this.hideHeader,
-        serverText:'用户名不存在或密码错误'
+        serverText:'用户名不存在或密码错误',
+        showPwd:false
       }
     },
     methods: {
+      showP(){
+        this.showPwd=!this.showPwd;
+      },
       login: function () {
         if(!/^1[3456789]\d{9}$/.test(this.phone) && !/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z]{2,5}$$/.test(this.phone)){
           this.isPhone=true;
@@ -65,7 +70,7 @@
         let that=this;
         let sign=md5(this.phone+pwd+this.resToken+this.hold+stime)
         this.SUBMIT=true;
-        this.$axios.post('/api/identity/user/login', {
+        this.$axios.post('/monkey/identity/user/login', {
           user:this.phone,
           pwd:pwd,
           response :this.resToken,
@@ -154,6 +159,17 @@
   }
   .input-group{
     width:100%;
+  }
+  .el-icon-eye{
+    height:10px;
+    font-size: 10px;
+    position:absolute;
+    top:0;
+    bottom:0;
+    right:30px;
+    margin:auto;
+    cursor: pointer;
+    color:#909399;
   }
   .el-button{
     font-size: 16px;

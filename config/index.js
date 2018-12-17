@@ -11,13 +11,14 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
+      '/monkey': {
         // target: 'http://127.0.0.1:8096/monkey', // 家
         target: 'http://ssl.monkeybean.cn:7001/monkey', // 公司
+        // target: 'http://45.76.174.24/monkey', // 线上
         // secure: false,  // 如果是https接口，需要配置这个参数
         changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
         pathRewrite: {
-          '^/api': '/'
+          '^/monkey': '/'
         }
       },
       '/emsTest': {
@@ -59,7 +60,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

@@ -23,12 +23,12 @@
     :page-size="page_size"
     :total="total">
   </el-pagination>
-  <div class="change-confirm" v-if="selectType>0">
+  <div class="change-confirm" v-if="selectType>0 && count>0">
     <p>已选择</p>
     <p>{{count}}</p>
     <p>张图片</p>
     <div>
-      <p>确认{{text}}？</p>
+      <p class="confim-text">确认{{text}}？</p>
       <el-button type="danger" icon="el-icon-labo-duiconverted" circle @click="image_change"></el-button>
       <el-button type="info" icon="el-icon-labo-cuoconverted" circle @click="cancle"></el-button>
     </div>
@@ -84,7 +84,7 @@
       },
       image_change(){
         let that=this;
-        this.$axios.post('/api/operation/image/status/change',{
+        this.$axios.post('/monkey/operation/image/status/change',{
           id:this.change,
           operate:this.selectType
         })
@@ -137,7 +137,7 @@
               that.$message.error( '上传失败，请上传不大于2M的图片！');
               return;
             }else{
-              that.$axios.post('/api/operation/image/upload', {
+              that.$axios.post('/monkey/operation/image/upload', {
                 file64:reader.result.substring(reader.result.indexOf(",") + 1),
                 name:file.name,
               })
@@ -161,7 +161,7 @@
       upload_multiple:function() {
         let that=this;
         let file = Array.from($('.input-alb')[0].files);
-        that.$axios.post('/api/operation/image/multi/upload', {
+        that.$axios.post('/monkey/operation/image/multi/upload', {
           fileImg:file,
           name:'1'
         })
@@ -186,7 +186,6 @@
       make_layout_change(){
         var that=this;
         if($(".img-box").length==that.imgs.length && that.checkImg()){
-          console.log('change')
           $('.imgs').show();
           $(".imgs").pinterest_grid({
             width:1200,
@@ -204,7 +203,7 @@
       getImage(){
         let that=this;
         that.showImg=false;
-        this.$axios.get('/api/operation/list/image/get', {
+        this.$axios.get('/monkey/operation/list/image/get', {
           params: {
             sharetype: that.type,
             current:that.current_page,
@@ -381,9 +380,12 @@
   .change-confirm{
     position: fixed;
     right:0;
-    width:260px;
-    height: 260px;
+    width:200px;
+    height: 200px;
     top:320px;
+  }
+  .confim-text{
+    margin:10px 0;
   }
   .btn-group{
     margin-bottom:30px;

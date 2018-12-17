@@ -5,7 +5,7 @@
       name="cover"
       accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp,image/tga"
       class="avatar-uploader"
-      action="api/identity/avatar/upload"
+      action="monkey/identity/avatar/upload"
       :show-file-list="false"
       :on-success="handleAvatarSuccess"
       :before-upload="beforeAvatarUpload">
