@@ -13,7 +13,7 @@ import profile from '@/components/profile'
 import pwdEdit from '@/components/pwdEdit'
 import mailBind from '@/components/mailBind'
 import mini from '@/components/mini'
-
+import project from '@/components/project'
 Vue.use(Router)
 
 export default new Router({
@@ -70,6 +70,11 @@ export default new Router({
           component:mailBind,
         },
       ]
+    },
+    {
+      path: '/project',
+      name: 'project',
+      component: project
     },
   ]
 })

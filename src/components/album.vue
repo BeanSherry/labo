@@ -14,6 +14,7 @@
       <i class="el-icon-labo-weixuanzhong1" :data-id="key" v-show="selectType==2||selectType==1" :index="key" @click="del_img(item.id)" :class="isselected(item.id)"></i>
       <span v-if="item.share" class="is-share"><i class="el-icon-labo-xing"></i></span>
       <img :src="item.accessUrl">
+      <div class="img-name ellipsis">{{item.fileName.substr(0,item.fileName.indexOf('.'))}}</div>
     </div>
   </div>
   <input type="file" multiple class="input-alb" accept="image/png,image/jpg,image/gif" style="display:none;" @change="upload_single">
@@ -287,6 +288,21 @@
     height: auto;
     border-radius: 10px;
     object-fit: cover;
+  }
+  .img-name{
+    position: absolute;
+    height:30px;
+    line-height:30px;
+    border-radius:0 0 10px 10px;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+    background:rgba(0,0,0,0.5);
+    color:#fff;
+    font-size: 16px;
+    font-weight: 700;
+    padding:0 15px;
   }
   .el-icon-circle-close,
   .el-icon-labo-weixuanzhong1{

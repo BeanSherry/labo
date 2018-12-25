@@ -11,6 +11,9 @@
             <li v-bind:class="{active:active=='/album'}">
               <router-link to="/album">相册</router-link>
             </li>
+            <li v-bind:class="{active:active=='/project'}">
+              <router-link to="/project">项目</router-link>
+            </li>
           </ul>
         </div>
       </el-col>
